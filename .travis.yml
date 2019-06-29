@@ -1,0 +1,6 @@
+language: minimal
+dist: xenial
+services:
+  - docker
+script:
+  - make
