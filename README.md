@@ -1,3 +1,3 @@
-[![Build Status](https://travis-ci.org/dalehamel/bpf.sh.svg?branch=master)](https://travis-ci.org/dalehamel/bpf.sh)
+[![Build Status](https://travis-ci.org/bpftools/bpf.sh.svg?branch=master)](https://travis-ci.org/bpftools/bpf.sh)
 
 The source code for the awesome https://bpf.sh
