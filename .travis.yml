@@ -1,6 +1,14 @@
 language: minimal
 dist: xenial
 services:
-  - docker
+- docker
 script:
-  - make
+- make
+env:
+  matrix:
+  - secure: P3wjqCAqPYy0swQDQt+NRLMeBtBfVfcPXR92XSWuIQSEq1mg+fJtw2yNgOzui0rDoRMivKTgGTvS2jgOIa0XpD8eBB4KafPGLkOyjyL2W4Y0+z5U3nGVs7LXl2NIk/rPmJm9leU+8GL5neV59IuboOII6hPoH3ariuCxv4Kr2idBoAZrbD3BiPypQ6Slo/QgpW1ZjPggUMxUvUchvyXQ+9ZwsRPE12j3Pars/h2Rs7xWmCL62fwplUaiMjvc3BtJUw+cwr5ulBRqeqSwHO5f77tlkWy4ZLb6DurbilgeanjC6JgNJy1rL3cOKmUieCLdw0z9oSes3khfwLJ3fSnLZ2STgWTVkC9Uy/TuZ3+2lXtV5nTd7lh9cN3+BFGhq0lrQ7rgXGrHRcS1DsSGCeVTWAEqM2qYIZR8ZoLkpEEDNp1/MJ0nF/zEOHpDc8DdvqTF80q8Y0tK/zxXQLRHAmy8PkCHlkYtgKfHkJCZwEDrt6y00GMmRPZEvSFb/iQPrCeJM7WwOrBqGtb+Y9O1YZdgfFr7fDdA1mvgTnpwe/bhljkFDrD2IsiQNjn9gjIBjDRkJHhVn+bP6F7NXTDqp2OVEBlL9X5PdyVmFKgnsJAWxDsepWcQFuxCDBG08/X64miI8NtkSqWYdAMKCXCwFo7NTrxsDteOLzDNVAhH+fmrVMo=
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: "$GITHUB_TOKEN"
+  target_branch: gh-pages
