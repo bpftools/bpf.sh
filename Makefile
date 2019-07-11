@@ -31,8 +31,11 @@ docs/usdt-report-doc/output/doc.html: _usdt_report_doc/builder/run
 	docker exec usdt-report-doc ./scripts/build.sh
 
 usdt-report-doc/index.html: docs/usdt-report-doc/output/doc.html
-	rm -f docs/usdt-report-doc/src/bcc/tests/lua/spec
 	cp -r docs/usdt-report-doc/img usdt-report-doc/img
 	cp docs/usdt-report-doc/output/doc.html usdt-report-doc/index.html
+
+.PHONY: travis
+travis:
+	rm -f docs/usdt-report-doc/src/bcc/tests/lua/spec
 
 all: usdt-report-doc/index.html
