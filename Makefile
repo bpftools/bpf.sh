@@ -34,7 +34,7 @@ docs/build: _doc/builder/run
 # any hacks needed to easily build / publish on travis
 .PHONY: travis
 travis:
-	script/tidy
+	scripts/tidy
 	rm -f .gitignore
 
 index.html:
