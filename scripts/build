@@ -1,0 +1,25 @@
+#!/bin/bash
+
+DOCKER_BUILDER=$1
+
+set -x
+
+for doc in $(ls docs | grep doc); do
+  echo "Generating ${doc}"
+
+  if [ -e docs/${doc}/Makefile ];then
+    build_cmd=make
+  else
+    build_cmd=/app/${doc}/scripts/build.sh
+  fi
+  docker exec -w /app/${doc} ${DOCKER_BUILDER} "${build_cmd}" # FIXME standardize build entrypoint
+  mkdir -p ${doc}
+
+  # Ensure that any supplementary image files can be easily copied
+  if [ -d docs/${doc}/img ];then
+    mkdir -p ${doc}/img
+    cp -r docs/${doc}/img/* ${doc}/img/
+  fi
+
+  cp docs/${doc}/output/doc.html ${doc}/index.html
+done

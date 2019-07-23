@@ -1,0 +1,13 @@
+#!/bin/bash
+# Hooks to clean up generated files
+
+set -x
+
+for doc in $(ls docs | grep doc); do
+  echo "Cleaning up generated ${doc}"
+  if [ -d ${doc} ];then
+    rm -rf ${doc}/
+  fi
+done
+
+rm -f index.html
