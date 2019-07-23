@@ -1,3 +1,4 @@
 all:
 	mkdir -p output
-	cp pandoc docs/index.md output/doc.html
+	pandoc docs/index.md -o output/doc.html \
+                       --template templates/bootstrap.html
