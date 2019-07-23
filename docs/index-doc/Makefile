@@ -1,3 +1,3 @@
 all:
 	mkdir -p output
-	cp index.html output/doc.html
+	cp pandoc docs/index.md output/doc.html
