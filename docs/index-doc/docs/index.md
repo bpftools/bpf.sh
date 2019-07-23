@@ -1,46 +1,47 @@
+---
+title: bpf.sh
+
+---
+
 bpf.sh
 ------
 
-::: {.section}
-I\'m not sure yet what to do with this domain, some ideas I have for it
-are:
+# Hosted on this site
 
--   ~~Actually run a mail forwarding services for cool people in the BPF
-    space would love a bpf.sh email address!~~ - **Done!** If you want
-    one, **write me an email** telling me more about your journey with
-    BPF!
--   Have a docker registry like r.bpf.sh/yourimage for container images
-    that are actually related to bpf programs
--   ~~Make a little collection of interesting BPF resources, books,
-    whatever in the main website~~ Started!
--   Run a vanity domain for go packages like **go.bpf.sh**, I would love
-    to use it for [kubectl
-    trace](https://github.com/fntlnz/kubectl-trace) for example
+These reports have been published directly to bpf.sh:
 
-I\'m open to suggestions! Reach me out on twitter
-[\@fntlnz](https://twitter.com/fntlnz) or write me at
-
-``` {style="display: inline"}
-lo at bpf.sh
-```
-
-and let me know what you think!
-
-My GPG key [is here](https://fntlnz.wtf/downloads/pubkey-B2400EE4.asc).
-
-Publications and Resources
-
-[usdt-report-doc](../usdt-report-doc/index.html), a publication from
-Dale Hamel of Shopify on USDT tracing, demonstrating how USDT tracing
+* [production-breakpoints-doc](../production-breakpoints-doc/index.html), a publication from Dale Hamel of Shopify on an experimental concept of dynamically injecting USDT tracepoints into methods running in a Production environment.
+* [usdt-report-doc](../usdt-report-doc/index.html), a publication from Dale Hamel of Shopify on USDT tracing, demonstrating how USDT tracing
 works by explaining the anatomy of the gem ruby-static-tracing.
 
-[production-breakpoints-doc](../production-breakpoints-doc/index.html),
-a publication from Dale Hamel of Shopify on an experimental concept of
-dynamically injecting USDT tracepoints into methods running in a
-Production environment.
+Feel free to contribute to any reports on this site - it's meant to be collaborative.
 
-[Load XDP programs with
+If you've been doing something cool with eBPF, please consider contributing your own report!
+
+# External eBPF resources
+
+## XDP and Networking
+
+* [Load XDP programs with
 iproute2](https://medium.com/@fntlnz/load-xdp-programs-using-the-ip-iproute2-command-502043898263),
 a medium article from Lorenzo Fontana demonstrating a basic usage of XDP
 to load an eBPF program.
-:::
+
+## Tracing and Performance Analysis
+
+* [We just got a new super-power! Runtime USDT comes to Linux](https://medium.com/sthima-insights/we-just-got-a-new-super-power-runtime-usdt-comes-to-linux-814dc47e909f) a medium arcticle by Matheus Marchini of Netflix, introducing libstapsdt to dynamically add USDT tracepoints in arbitrary languages.
+
+## Books on eBPF
+
+eBPF is a very new topic so there aren't a lot of books, but take a look at:
+
+* Upcoming [Linux Observability with BPF](https://www.oreilly.com/library/view/linux-observability-with/9781492050193/) by Lorenzo Fontana, David Calavera
+* Upcoming [BPF Performance Tools](http://www.brendangregg.com/blog/2019-07-15/bpf-performance-tools-book.html) by Brendan Gregg, reviewers editors include Dale Hamel
+
+Both are or will be visible on Safari soon, so you can make an account with O'Reilly to read electronic editios of them before they are available in print.
+
+# Want to contribute?
+
+This site is meant to be easy to contribute to! Add a report using the existing format by following the [contributing guidelines](https://github.com/bpftools/bpf.sh/blob/master/CONTRIBUTING.md). To get started, you just need to write markdown! A number of pandoc extensions are supported by default - but you can use any static site builder you'd like if you want to contribute.
+
+Get in touch Lorenzo on Twitter at [\@fntlnz](https://twitter.com/fntlnz) or `lo at bpf.sh` ([GPG](https://fntlnz.wtf/downloads/pubkey-B2400EE4.asc)), or open an issue on https://github.com/bpftools/bpf.sh and ping another maintainer of the `bpftools` org.
