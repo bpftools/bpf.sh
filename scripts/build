@@ -6,7 +6,13 @@ set -x
 
 for doc in $(ls docs | grep doc); do
   echo "Generating ${doc}"
-  docker exec ${DOCKER_BUILDER} "/app/${doc}/scripts/build.sh" # FIXME standardize build entrypoint
+
+  if [ -e docs/${doc}/Makefile ];then
+    build_cmd=make
+  else
+    build_cmd=/app/${doc}/scripts/build.sh
+  fi
+  docker exec -w /app/${doc} ${DOCKER_BUILDER} "${build_cmd}" # FIXME standardize build entrypoint
   mkdir -p ${doc}
 
   # Ensure that any supplementary image files can be easily copied

@@ -4,9 +4,7 @@ DOCKER ?= docker
 
 .DEFAULT_GOAL := all
 
-# FIXME standardize this build image, rename to "pandoc-report-builder" or something obvious
-# containing the basic latex and pandoc deps to render doc output
-PANDOC_BUILDER_IMAGE ?= "quay.io/dalehamel/usdt-report-doc"
+PANDOC_BUILDER_IMAGE ?= "quay.io/dalehamel/pandoc-report-builder"
 DOCKER_BUILDER ?= "pandoc-report-builder"
 PWD ?= `pwd`
 
@@ -21,7 +19,6 @@ submodules:
 
 .PHONY: _doc/builder/run
 _doc/builder/run: clean submodules
-	mkdir -p usdt-report-doc production-breakpoints-doc
 	${DOCKER} run -v ${PWD}/docs:/app \
            --name ${DOCKER_BUILDER} \
            -d ${PANDOC_BUILDER_IMAGE} \

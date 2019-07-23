@@ -14,7 +14,7 @@ A collection of useful documentation, analyses of code in experimental or produc
 
 To add a new doc to this repository, you can use the generalized "pandoc builder".
 
-Simply clone a copy of the template repository to the docs folder, and it should be picked up by the site builder.
+Simply fork the [template repository](https://github.com/bpftools/pandoc-report-doc-base), rename it, and add it as a submodule of the docs folder, and it should be picked up by the site builder.
 
 Otherwise, add your repo as a submodule of /docs, and ensure it has a /scripts/build.sh executable that builds the doc, and copies it to the / of the repository, so it will be uploaded to gh-pages.
 
@@ -47,5 +47,5 @@ None have been added yet, but anything that can live as a submodule in the docs/
 
 If you like Jekyll, Hugo, or something else, feel free to add a builder for that. You just need to:
 
-- Have a docker container, that has the build dependencies, like used for the `pandoc-report-builder`
-- Add a file in your repo at /scripts/build.sh that can be called in order to generate the site and copy it to the right spot.
+- Submit a pull request to add the stuff you need in order to do the build to https://github.com/dalehamel/pandoc-report-builder, that has the build dependencies, like used for the `pandoc-report-builder`
+- Add a Makefile file in your repo, or a script at /scripts/build.sh that can be called in order to generate the site and copy it to the right spot.
