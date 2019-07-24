@@ -26,6 +26,6 @@ travis:
 	rm -f .gitignore
 
 index.html:
-	ln -sf index-doc/index.html
+	ln -sf index/index.html index.html
 
 all: docs/build index.html

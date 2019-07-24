@@ -29,5 +29,8 @@ for doc in $(ls -d docs/*); do
     cp -r ${doc}/img/* ${name}/img/
   fi
 
-  cp ${doc}/output/doc.html ${name}/index.html
+  if [ -d ${doc}/output ];then
+    cp ${doc}/output/doc.html ${name}/index.html
+    cp -r ${doc}/output/ ${name}/
+  fi
 done
