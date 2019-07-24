@@ -1,25 +1,33 @@
 #!/bin/bash
-
-DOCKER_BUILDER=$1
-
 set -x
 
-for doc in $(ls docs | grep doc); do
+
+DOCKER_BUILDER=$1
+BASE_DIR="$(dirname $( cd "$(dirname "$0")" ; pwd -P ))"
+
+for doc in $(ls -d docs/*); do
   echo "Generating ${doc}"
 
-  if [ -e docs/${doc}/Makefile ];then
+  name=$(basename ${doc})
+  if [ -x ${doc}/scripts/pandoc-build ];then
+    build_cmd=/app/${name}/scripts/pandoc-build
+  elif [ -e ${doc}/Makefile ];then
     build_cmd=make
+  elif [ -x ${doc}/.BUILD ];then
+    build_cmd="$(cat ${doc}/.BUILD)"
   else
     build_cmd=/app/${doc}/scripts/build.sh
   fi
-  docker exec -w /app/${doc} ${DOCKER_BUILDER} "${build_cmd}" # FIXME standardize build entrypoint
-  mkdir -p ${doc}
+
+  docker run -v ${BASE_DIR}/docs/:/app \
+             -w /app/${name} ${DOCKER_BUILDER} "${build_cmd}" # FIXME standardize build entrypoint
+  mkdir -p ${name}
 
   # Ensure that any supplementary image files can be easily copied
-  if [ -d docs/${doc}/img ];then
-    mkdir -p ${doc}/img
-    cp -r docs/${doc}/img/* ${doc}/img/
+  if [ -d ${doc}/img ];then
+    mkdir -p ${name}/img
+    cp -r ${doc}/img/* ${name}/img/
   fi
 
-  cp docs/${doc}/output/doc.html ${doc}/index.html
+  cp ${doc}/output/doc.html ${name}/index.html
 done
