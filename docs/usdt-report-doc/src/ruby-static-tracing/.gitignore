@@ -1,0 +1,13 @@
+*.so
+*.so.0
+*.swp
+html
+coverage
+*.iso
+*.log
+*.dylib
+*.bundle
+.vagrant
+tmp
+pkg
+.bin

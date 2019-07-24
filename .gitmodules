@@ -1,0 +1,6 @@
+[submodule "docs/usdt-report-doc"]
+	path = docs/usdt-report-doc
+	url = https://github.com/dalehamel/usdt-report-doc.git
+[submodule "docs/production-breakpoints-doc"]
+	path = docs/production-breakpoints-doc
+	url = https://github.com/dalehamel/production-breakpoints-doc.git

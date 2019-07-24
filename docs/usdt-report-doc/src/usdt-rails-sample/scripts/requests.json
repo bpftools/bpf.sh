@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/sample/all",
+    "body": "some content",
+    "method": "GET"
+  },
+  {
+    "path": "/sample/welcome",
+    "body": "some content",
+    "method": "GET"
+  },
+  {
+    "path": "/sample/slow",
+    "body": "some content",
+    "method": "GET"
+  },
+  {
+    "path": "/sample/random",
+    "body": "some content",
+    "method": "GET"
+  }
+]

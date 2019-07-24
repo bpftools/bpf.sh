@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<!--
+==============================================================================
+           "GitHub HTML5 Pandoc Template" v2.1 — by Tristano Ajmone           
+==============================================================================
+Copyright © Tristano Ajmone, 2017, MIT License (MIT). Project's home:
+
+- https://github.com/tajmone/pandoc-goodies
+
+The CSS in this template reuses source code taken from the following projects:
+
+- GitHub Markdown CSS: Copyright © Sindre Sorhus, MIT License (MIT):
+  https://github.com/sindresorhus/github-markdown-css
+
+- Primer CSS: Copyright © 2016-2017 GitHub Inc., MIT License (MIT):
+  http://primercss.io/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The MIT License 
+
+Copyright (c) Tristano Ajmone, 2017 (github.com/tajmone/pandoc-goodies)
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+Copyright (c) 2017 GitHub Inc.
+
+"GitHub Pandoc HTML5 Template" is Copyright (c) Tristano Ajmone, 2017, released
+under the MIT License (MIT); it contains readaptations of substantial portions
+of the following third party softwares:
+
+(1) "GitHub Markdown CSS", Copyright (c) Sindre Sorhus, MIT License (MIT).
+(2) "Primer CSS", Copyright (c) 2016 GitHub Inc., MIT License (MIT).
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+==============================================================================-->
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Dale Hamel" />
+  <title>USDT Tracing report</title>
+  <style type="text/css">
+.markdown-body{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;color:#24292e;font-family:-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";font-size:16px;line-height:1.5;word-wrap:break-word;box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}.markdown-body a{color:#0366d6;background-color:transparent;text-decoration:none;-webkit-text-decoration-skip:objects}.markdown-body a:active,.markdown-body a:hover{outline-width:0}.markdown-body a:hover{text-decoration:underline}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body strong{font-weight:600}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1{font-size:2em;margin:.67em 0;padding-bottom:.3em;border-bottom:1px solid #eaecef}.markdown-body h2{padding-bottom:.3em;font-size:1.5em;border-bottom:1px solid #eaecef}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#6a737d}.markdown-body img{border-style:none}.markdown-body svg:not(:root){overflow:hidden}.markdown-body hr{box-sizing:content-box;height:.25em;margin:24px 0;padding:0;overflow:hidden;background-color:#e1e4e8;border:0}.markdown-body hr::before{display:table;content:""}.markdown-body hr::after{display:table;clear:both;content:""}.markdown-body input{margin:0;overflow:visible;font:inherit;font-family:inherit;font-size:inherit;line-height:inherit}.markdown-body [type=checkbox]{box-sizing:border-box;padding:0}.markdown-body *{box-sizing:border-box}.markdown-body blockquote{margin:0}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol ol,.markdown-body ul ol{list-style-type:lower-roman}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body ol ol ol,.markdown-body ol ul ol,.markdown-body ul ol ol,.markdown-body ul ul ol{list-style-type:lower-alpha}.markdown-body li>p{margin-top:16px}.markdown-body li+li{margin-top:.25em}.markdown-body dd{margin-left:0}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:600}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body code{font-family:SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace}.markdown-body pre{font:12px SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace;word-wrap:normal}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body blockquote{padding:0 1em;color:#6a737d;border-left:.25em solid #dfe2e5}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body table{display:block;width:100%;overflow:auto;border-spacing:0;border-collapse:collapse}.markdown-body table th{font-weight:600}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #dfe2e5}.markdown-body table tr{background-color:#fff;border-top:1px solid #c6cbd1}.markdown-body table tr:nth-child(2n){background-color:#f6f8fa}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body code{padding:.2em 0;margin:0;font-size:85%;background-color:rgba(27,31,35,.05);border-radius:3px}.markdown-body code::after,.markdown-body code::before{letter-spacing:-.2em;content:"\00a0"}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:0 0;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f6f8fa;border-radius:3px}.markdown-body pre code{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code::after,.markdown-body pre code::before{content:normal}.markdown-body .full-commit .btn-outline:not(:disabled):hover{color:#005cc5;border-color:#005cc5}.markdown-body kbd{box-shadow:inset 0 -1px 0 #959da5;display:inline-block;padding:3px 5px;font:11px/10px SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace;color:#444d56;vertical-align:middle;background-color:#fcfcfc;border:1px solid #c6cbd1;border-bottom-color:#959da5;border-radius:3px;box-shadow:inset 0 -1px 0 #959da5}.markdown-body :checked+.radio-label{position:relative;z-index:1;border-color:#0366d6}.markdown-body .task-list-item{list-style-type:none}.markdown-body .task-list-item+.task-list-item{margin-top:3px}.markdown-body .task-list-item input{margin:0 .2em .25em -1.6em;vertical-align:middle}.markdown-body::before{display:table;content:""}.markdown-body::after{display:table;clear:both;content:""}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.Alert,.Error,.Note,.Success,.Warning{padding:11px;margin-bottom:24px;border-style:solid;border-width:1px;border-radius:4px}.Alert p,.Error p,.Note p,.Success p,.Warning p{margin-top:0}.Alert p:last-child,.Error p:last-child,.Note p:last-child,.Success p:last-child,.Warning p:last-child{margin-bottom:0}.Alert{color:#246;background-color:#e2eef9;border-color:#bac6d3}.Warning{color:#4c4a42;background-color:#fff9ea;border-color:#dfd8c2}.Error{color:#911;background-color:#fcdede;border-color:#d2b2b2}.Success{color:#22662c;background-color:#e2f9e5;border-color:#bad3be}.Note{color:#2f363d;background-color:#f6f8fa;border-color:#d5d8da}.Alert h1,.Alert h2,.Alert h3,.Alert h4,.Alert h5,.Alert h6{color:#246;margin-bottom:0}.Warning h1,.Warning h2,.Warning h3,.Warning h4,.Warning h5,.Warning h6{color:#4c4a42;margin-bottom:0}.Error h1,.Error h2,.Error h3,.Error h4,.Error h5,.Error h6{color:#911;margin-bottom:0}.Success h1,.Success h2,.Success h3,.Success h4,.Success h5,.Success h6{color:#22662c;margin-bottom:0}.Note h1,.Note h2,.Note h3,.Note h4,.Note h5,.Note h6{color:#2f363d;margin-bottom:0}.Alert h1:first-child,.Alert h2:first-child,.Alert h3:first-child,.Alert h4:first-child,.Alert h5:first-child,.Alert h6:first-child,.Error h1:first-child,.Error h2:first-child,.Error h3:first-child,.Error h4:first-child,.Error h5:first-child,.Error h6:first-child,.Note h1:first-child,.Note h2:first-child,.Note h3:first-child,.Note h4:first-child,.Note h5:first-child,.Note h6:first-child,.Success h1:first-child,.Success h2:first-child,.Success h3:first-child,.Success h4:first-child,.Success h5:first-child,.Success h6:first-child,.Warning h1:first-child,.Warning h2:first-child,.Warning h3:first-child,.Warning h4:first-child,.Warning h5:first-child,.Warning h6:first-child{margin-top:0}h1.title,p.subtitle{text-align:center}h1.title.followed-by-subtitle{margin-bottom:0}p.subtitle{font-size:1.5em;font-weight:600;line-height:1.25;margin-top:0;margin-bottom:16px;padding-bottom:.3em}div.line-block{white-space:pre-line}
+  </style>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #2a211c;
+    color: #bdae9d;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #bdae9d;  padding-left: 4px; }
+div.sourceCode
+  { color: #bdae9d; background-color: #2a211c; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ffff00; } /* Alert */
+code span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bn { color: #44aa43; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #049b0a; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
+code span.do { color: #0066ff; font-style: italic; } /* Documentation */
+code span.dt { text-decoration: underline; } /* DataType */
+code span.dv { color: #44aa43; } /* DecVal */
+code span.er { color: #ffff00; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #44aa43; } /* Float */
+code span.fu { color: #ff9358; font-weight: bold; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
+code span.op { } /* Operator */
+code span.pp { font-weight: bold; } /* Preprocessor */
+code span.sc { color: #049b0a; } /* SpecialChar */
+code span.ss { color: #049b0a; } /* SpecialString */
+code span.st { color: #049b0a; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #049b0a; } /* VerbatimString */
+code span.wa { color: #ffff00; font-weight: bold; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<article class="markdown-body">
+<header>
+<h1 class="title">USDT Tracing report</h1>
+<p class="author">Dale Hamel</p>
+<p class="date">07/24/19 05:48:48 AM UTC</p>
+</header>
+<hr>
+<nav id="TOC">
+<h1 class="toc-title">Contents</h1>
+<ul>
+<li><a href="#foreword">Foreword</a><ul>
+<li><a href="#disclaimer">Disclaimer</a></li>
+<li><a href="#motivation">Motivation</a></li>
+</ul></li>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#usdt---userspace-statically-defined-tracepoints">USDT - Userspace Statically Defined Tracepoints</a></li>
+<li><a href="#portability">Portability</a></li>
+<li><a href="#performance">Performance</a></li>
+</ul></li>
+<li><a href="#bpftrace">bpftrace</a></li>
+<li><a href="#tracing-examples">Tracing Examples</a><ul>
+<li><a href="#listing-tracepoints">Listing tracepoints</a></li>
+<li><a href="#simple-hello-world">Simple hello world</a></li>
+<li><a href="#aggregation-functions">Aggregation functions</a></li>
+<li><a href="#latency-distributions">Latency distributions</a></li>
+</ul></li>
+<li><a href="#adding-usdt-support-to-a-dynamic-language">Adding USDT support to a dynamic language</a><ul>
+<li><a href="#ruby-static-tracing">ruby-static-tracing</a></li>
+<li><a href="#libstapsdt">libstapsdt</a></li>
+<li><a href="#examining-the-dynamically-loaded-elf">Examining the dynamically loaded ELF</a><ul>
+<li><a href="#int3-0xcc-nop-0x90-and-uprobes">int3 (0xCC), NOP (0x90) and uprobes</a></li>
+<li><a href="#usdt-read-arguments">USDT read arguments</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#usdt-tracing-in-rails">USDT tracing in rails</a></li>
+<li><a href="#usdt-examples-in-other-dynamic-languages">USDT examples in other dynamic languages</a><ul>
+<li><a href="#ruby-wrapper-featured-elsewhere">Ruby wrapper (featured elsewhere)</a></li>
+<li><a href="#python-wrapper">Python wrapper</a></li>
+<li><a href="#nodejs-wrapper">NodeJS wrapper</a></li>
+<li><a href="#golang-wrapper">golang wrapper</a></li>
+</ul></li>
+<li><a href="#libusdt">libusdt</a></li>
+<li><a href="#kubectl-trace">kubectl-trace</a></li>
+<li><a href="#use-in-local-development-environments">Use in Local Development Environments</a><ul>
+<li><a href="#using-virtualization">Using virtualization</a></li>
+<li><a href="#dtrace">dtrace</a></li>
+<li><a href="#listing-tracepoints-1">Listing tracepoints</a></li>
+<li><a href="#simple-hello-world-1">Simple hello world</a></li>
+<li><a href="#aggregation-functions-1">Aggregation functions</a></li>
+<li><a href="#latency-distributions-1">Latency distributions</a></li>
+</ul></li>
+<li><a href="#use-in-ci-environments">Use in CI environments</a><ul>
+<li><a href="#call-stenography">Call stenography</a></li>
+<li><a href="#memory-testing-analysis">Memory testing / analysis</a></li>
+<li><a href="#integration-testing">Integration testing</a></li>
+<li><a href="#performance-testing">Performance testing</a></li>
+</ul></li>
+<li><a href="#self-analysis">Self-analysis</a></li>
+<li><a href="#future-work">Future Work</a><ul>
+<li><a href="#more-tracers-for-ruby-static-tracing">More tracers for ruby-static-tracing</a></li>
+<li><a href="#kernel-vs-userspace-buffering">Kernel vs userspace buffering</a></li>
+<li><a href="#ustack-helpers-in-bpftrace">ustack helpers in bpftrace</a></li>
+<li><a href="#ruby-jit-notes">Ruby JIT notes</a></li>
+</ul></li>
+<li><a href="#usdt-tracing-alternatives">USDT tracing alternatives</a><ul>
+<li><a href="#ptrace-api">ptrace API</a><ul>
+<li><a href="#gdb">gdb</a></li>
+<li><a href="#strace">strace</a></li>
+</ul></li>
+<li><a href="#process_vm_readv">process_vm_readv</a></li>
+<li><a href="#signaling">signaling</a></li>
+<li><a href="#ruby">Ruby</a><ul>
+<li><a href="#tracing-api">Tracing api</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#acknowledgments">Acknowledgments</a><ul>
+<li><a href="#works-researched">Works Researched</a></li>
+</ul></li>
+</ul>
+</nav>
+<hr>
+<h1 id="foreword">Foreword</h1>
+<p>This document is prepared with pandoc markdown, and available in the following formats:</p>
+<ul>
+<li><a href="http://blog.srvthe.net/usdt-report-doc/output/doc.epub">epub</a></li>
+<li><a href="http://blog.srvthe.net/usdt-report-doc/output/doc.mobi">mobi (for kindle)</a></li>
+<li><a href="http://blog.srvthe.net/usdt-report-doc/output/doc.pdf">pdf (in academic format)</a></li>
+</ul>
+<p>You can read the epub with a browser extension such as <a href="https://chrome.google.com/webstore/detail/epubreader/jhhclmfgfllimlhabjkgkeebkbiadflb?hl=en">epubreader for chrome</a>, or <a href="https://addons.mozilla.org/en-CA/firefox/addon/epubreader/">epubreader for firefox</a>. The epub is the most enjoyable to read, the PDF is more academically formatted, and the html is meant for broad accessibility. Enjoy!</p>
+<p>This document is an open-source report on Userspace Statically Defined Tracepoints (USDT). The document source is available on <a href="https://github.com/dalehamel/usdt-report-doc">github</a>. If you find any errors or omissions, please file an issue or submit a pull request. It is meant to be a useful manual, with reference implementations and runnable examples. It will also explain how USDT probes work on linux end-to-end, and demonstrate some practical applications of them.</p>
+<p>This is intended audience of this work is performance engineers, who wish to familiarize themselves with USDT tracing in both development (assuming Mac OS, Linux, or any platform that supports Vagrant, or Docker on a hypervisor with a new enough kernel), and production (assuming Linux, with kernel 4.14 or greater, ideally 4.18 or greater) environments.</p>
+<h2 id="disclaimer">Disclaimer</h2>
+<p>The following demonstrates the abilities of unreleased and in some cases unmerged branches, so some of it may be subject to change.</p>
+<p>The following pull requests are assumed merged in your local development environment:</p>
+<ul>
+<li><a href="https://github.com/sthima/libstapsdt/pull/24">Support for writing ELF notes to a memfd backed file descriptor in libstapsdt</a> for storing ELF notes in a memory-backed file, to avoid having to clean up elf blobs accumulating in <code>/tmp</code> directory when a probed program exits uncleanly. Presently <strong>UNMERGED</strong>, but is used by <code>ruby-static-tracing</code> by default and will probably be the default for <code>libstapsdt</code> after some rework. This is only an issue if you find the need to build <code>libstapsdt</code> yourself, and want to use memory-backed file descriptors.</li>
+<li><a href="https://github.com/iovisor/kubectl-trace/pull/52">Build ubuntu images and use them by default in kubectl trace</a> for the kubectl trace examples here.</li>
+</ul>
+<p>For the submodules of this repository, we reference these branches accordingly, until (hopefully) all are merged and have a point release associated with them.</p>
+<p>You also must have a kernel that supports all of the bpftrace/bcc features. To probe userspace containers on overlayfs, you need kernel <code>4.18</code> or later. A minimum of kernel <code>4.14</code> is needed for many examples here.</p>
+<h2 id="motivation">Motivation</h2>
+<p>I started this document with the hope that it would act as a helpful introduction to a number of cool new technologies being developed to enhance system observability on Linux platforms. With containerization being the dominant paradigm for production environments, workloads have moved from statically scheduled, orderly single-tenant deployments, to multi-tenant swarms of containers.</p>
+<p>As a Production Systems Operator, eBPF has proven itself to be is a useful tool to help reliably give insight into deployed code serving live traffic where otherwise it would be difficult to see what an application is doing without compromising performance and bogging down the user experience of a live system, or worse, compromising and crashing it entirely.</p>
+<p>The relative ease of writing language-specific bindings, even for dynamically evaluated languages, I think has bent the learning curve to the point that it is within reach, or has become a “lower hanging fruit” than it was before. While much work is ongoing for distributed tracing, I see this to be complementary to this type of userspace system tracing. Distributed tracing can show the interactions between apps, and USDT tracing and uprobes can help to drill down into individual systems.</p>
+<p>I hope you enjoy reading this report and find the content accessible. I am constantly seeking to improve my writing and communication skills, so if you have suggestions please give me the gift of feedback on any suggestions to help improve accessibility and clarity.</p>
+<p>-Dale Hamel</p>
+<h1 id="introduction">Introduction</h1>
+<h2 id="usdt---userspace-statically-defined-tracepoints">USDT - Userspace Statically Defined Tracepoints</h2>
+<p>USDT tracepoints are a powerful tool that gained popularity with <code>dtrace</code>.</p>
+<p>In short, USDT tracepoints allow you to build-in diagnostics at key points of an application.</p>
+<p>These can be used for debugging the application, measuring the performance characteristics, or analyzing any aspect of the runtime state of the program.</p>
+<p>USDT tracepoints are placed within your code, and are executed when:</p>
+<ul>
+<li>They have been explicitly enabled.</li>
+<li>A tracing program, such as <code>bpftrace</code> or <code>dtrace</code> is connected to it.</li>
+</ul>
+<h2 id="portability">Portability</h2>
+<p>Originally limited to BSD, Solaris, and other systems with <code>dtrace</code>, it is now simple to use USDT tracepoints on Linux. <code>systemtap</code> for linux has produced <code>sys/sdt.h</code> that can be used to add dtrace probes to linux applications written in C, and for dynamic languages <code>libstapsdt</code> <span class="citation" data-cites="libstapsdt">[<a href="#ref-libstapsdt" role="doc-biblioref">1</a>]</span> can be used to add static tracepoints using whatever C extension framework is available for the language runtime. To date, there are wrappers for golang, Python, NodeJS, and a Ruby <span class="citation" data-cites="ruby-static-tracing">[<a href="#ref-ruby-static-tracing" role="doc-biblioref">2</a>]</span> wrapper under development.</p>
+<p><code>bpftrace</code>’s similarity to <code>dtrace</code> allows for USDT tracepoints to be accessible throughout the lifecycle of an application.</p>
+<p>While more-and-more developers use Linux, there are still a large representation of Apple laptops for professional workstations. Many such enterprises also deploy production code to Linux systems. In such situations, developers can benefit from the insights that <code>dtrace</code> tracepoints have to offer them on their workstation as they are writing code. Once the code is ready to be shipped, the tracepoints can simply be left in the application. When it comes time to debug or analyze the code in production, the very same toolchain can be applied by translating <code>dtrace</code>’s <code>.dt</code> scripts into <code>bpftrace</code>’s `.bt scripts.</p>
+<p>Broad use of such tracepoints should be encouraged, as there is no performance downside to leaving them in the application. The greater the number of well-placed tracepoints in an application, the more tools developers will have at their disposal to gain insight into their application’s real-world runtime characteristics.</p>
+<h2 id="performance">Performance</h2>
+<p>Critically, USDT tracepoints have little to no impact on performance if they are not actively being used.</p>
+<p>This is what sets aside USDT tracepoints from other diagnostic tools, such as emitting metrics through statsd or writing to a logger.</p>
+<p>This makes USDT tracepoints great to deploy surgically, rather than the conventional “always on” diagnostics. Logging data and emitting metrics do have some runtime overhead, and it is constant. The overhead that USDT tracepoints have is minimal, and limited to when they are actively being used to help answer a question about the behavior of an application.</p>
+<h1 id="bpftrace">bpftrace</h1>
+<p>bpftrace <span class="citation" data-cites="bpftrace">[<a href="#ref-bpftrace" role="doc-biblioref">3</a>]</span> is an emerging new tool that is based on eBPF support added to version 4.1 of the linux kernel. While rapidly under development, it already supports much of dtrace’s functionality.</p>
+<p>You can use bpftrace in production systems to attach to and summarize data from trace points similarly to with dtrace.</p>
+<p>For more details for bpftrace, check out its own reference guide <span class="citation" data-cites="bpftrace-reference-guide">[<a href="#ref-bpftrace-reference-guide" role="doc-biblioref">4</a>]</span> and this great article <span class="citation" data-cites="joyful-bikeshedding-bpftrace">[<a href="#ref-joyful-bikeshedding-bpftrace" role="doc-biblioref">5</a>]</span>.</p>
+<p>You can bpftrace programs by specifying a string with the <code>-e</code> flag, or by running a bpftrace script (conventionally ending in <code>.bt</code>) directly.</p>
+<h1 id="tracing-examples">Tracing Examples</h1>
+<p>For most examples, we’ll assume you have two terminals side-by-side:</p>
+<ul>
+<li>One to run the program you want to trace (referred to as tracee).</li>
+<li>One to run your bpftrace and observe the output.</li>
+</ul>
+<p>Note that for development cases on OS X, dtrace usage is covered elsewhere.</p>
+<p>The source and all of these scripts are available in the <a href="https://github.com/dalehamel/usdt-report-doc/tree/gh-pages/examples">examples folder</a> of this repository, or from <a href="https://github.com/dalehamel/usdt-report-doc/tree/gh-pages/src">submodules</a>.</p>
+<h2 id="listing-tracepoints">Listing tracepoints</h2>
+<p>To list tracepoints that you can trace:</p>
+<pre><code>bpftrace -l &#39;usdt:*&#39; -p ${PROCESS}</code></pre>
+<h2 id="simple-hello-world">Simple hello world</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># frozen_string_literal: true</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3">require <span class="st">&#39;ruby-static-tracing&#39;</span></a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">t = <span class="dt">StaticTracing</span>::<span class="dt">Tracepoint</span>.new(<span class="st">&#39;global&#39;</span>, <span class="st">&#39;hello_world&#39;</span>,</a>
+<a class="sourceLine" id="cb2-6" title="6">                                  <span class="dt">Integer</span>, <span class="dt">String</span>)</a>
+<a class="sourceLine" id="cb2-7" title="7">t.provider.enable</a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9">loop <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-10" title="10">  <span class="kw">if</span> t.enabled?</a>
+<a class="sourceLine" id="cb2-11" title="11">    t.fire(<span class="dt">StaticTracing</span>.nsec, <span class="st">&#39;Hello world&#39;</span>)</a>
+<a class="sourceLine" id="cb2-12" title="12">    puts <span class="st">&#39;Probe fired!&#39;</span></a>
+<a class="sourceLine" id="cb2-13" title="13">  <span class="kw">else</span></a>
+<a class="sourceLine" id="cb2-14" title="14">    puts <span class="st">&#39;Not enabled&#39;</span></a>
+<a class="sourceLine" id="cb2-15" title="15">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb2-16" title="16">  sleep <span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="kw">end</span></a></code></pre></div>
+<p>This is a basic ruby script that demonstrates the basic use of static tracepoints in Ruby, usin the library <code>ruby-static-tracing</code> <span class="citation" data-cites="ruby-static-tracing">[<a href="#ref-ruby-static-tracing" role="doc-biblioref">2</a>]</span> Ruby gem, covered later.</p>
+<p>This simplistic program will loop indefinitely, printing <code>Not Enabled</code> every second. This represents the Ruby program going on it’s merry way, doing what it’s supposed to be doing - pretend that it is running actual application code. The application isn’t spending any time executing probes, all it is doing is checking if the probe is enabled. Since the probe isn’t enabled, it continues with business as usual. The cost of checking if a probe is enabled is extraordinarily low, ~5 micro seconds).</p>
+<p><a href="https://github.com/dalehamel/usdt-report-doc/blob/gh-pa%20es/img/probetest.gif"><img src="./img/probetest.gif" alt="probetest gif" /></a></p>
+<p>This example:</p>
+<ul>
+<li>Creates a provider implicitly through it’s reference to ‘global’, and indicates that it will be firing off an Integer and a String to the tracepoint.</li>
+<li>Registering the tracepoint is like a function declaration - when you fire the tracepoint later, the fire call must match the signature declared by the tracepoint.</li>
+<li>We fetch the the provider that we created, and enable it.</li>
+<li>Enabling the provider loads it into memory, but the tracepoint isn’t enabled until it’s attached to.</li>
+</ul>
+<p>Then, in an infinite loop, we check to see if our tracepoint is enabled, and fire it if it is.</p>
+<p>When we run <code>helloworld.rb</code>, it will loop and print:</p>
+<pre><code>Not enabled
+Not enabled
+Not enabled</code></pre>
+<p>One line about every second. Not very interesting, right?</p>
+<p>When we run our tracing program though:</p>
+<pre><code>bpftrace -e &#39;usdt::global:hello_nsec
+            { printf(&quot;%lld %s\n&quot;, arg0, str(arg1))}&#39; -p $(pgrep -f helloworld.rb)</code></pre>
+<p>Or, using a script:</p>
+<pre><code>bpftrace ./helloworld.bt -p $(pgrep -f helloworld.rb)</code></pre>
+<p><code>helloworld.bt</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode awk"><code class="sourceCode awk"><a class="sourceLine" id="cb6-1" title="1">usdt<span class="op">::</span>global<span class="op">:</span>hello_nsec</a>
+<a class="sourceLine" id="cb6-2" title="2">{</a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="kw">printf</span>(<span class="st">&quot;%lld %s</span><span class="sc">\n</span><span class="st">&quot;</span>, arg0, str(arg1))</a>
+<a class="sourceLine" id="cb6-4" title="4">}</a></code></pre></div>
+<p>We’ll notice that the output changes to indicate that the probe has been fired:</p>
+<pre><code>Not enabled
+Probe fired!
+Probe fired!
+Probe fired!</code></pre>
+<p>And, from our bpftrace process we see:</p>
+<pre><code>Attaching 1 probe...
+55369896776138 Hello world
+55370897337512 Hello world
+55371897691043 Hello world</code></pre>
+<p>Upon interrupting our bpftrace with Control+C, the probe stops firing as it is no longer enabled.</p>
+<p>This demonstrates:</p>
+<ul>
+<li>How to get data from ruby into our bpftrace using a tracepoint.</li>
+<li>That probes are only enabled when they are attached to.</li>
+<li>How to read integer and string arguments.</li>
+<li>Basic usage of bpftrace with this gem.</li>
+</ul>
+<p>In subsequent examples, none of these concepts are covered again.</p>
+<h2 id="aggregation-functions">Aggregation functions</h2>
+<p>While the hello world sample above is powerful for debugging, it’s basically just a log statement.</p>
+<p>To do something a little more interesting, we can use an aggregation function.</p>
+<p>bpftrace can generate linear and log2 histograms on map data. Linear histograms show the same data that is used to construct an ApDex<span class="citation" data-cites="appdex">[<a href="#ref-appdex" role="doc-biblioref">6</a>]</span>. This type of tracing is good for problems like understanding request latency.</p>
+<p>For this example, we’ll use <a href="https://github.com/dalehamel/usdt-report-doc/blob/gh-pages/examples/randist.rb">randist.rb</a> to analyze a pseudo-random distribution of data.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">#!/usr/bin/env ruby</span></a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3">require <span class="st">&#39;ruby-static-tracing&#39;</span></a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5">t = <span class="dt">StaticTracing</span>::<span class="dt">Tracepoint</span>.new(<span class="st">&#39;global&#39;</span>, <span class="st">&#39;randist&#39;</span>, <span class="dt">Integer</span>)</a>
+<a class="sourceLine" id="cb9-6" title="6">t.provider.enable</a>
+<a class="sourceLine" id="cb9-7" title="7"></a>
+<a class="sourceLine" id="cb9-8" title="8">r = <span class="dt">Random</span>.new</a>
+<a class="sourceLine" id="cb9-9" title="9"></a>
+<a class="sourceLine" id="cb9-10" title="10">loop <span class="kw">do</span></a>
+<a class="sourceLine" id="cb9-11" title="11">  t.fire(r.rand(<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="kw">end</span></a></code></pre></div>
+<p>The example should fire out random integers between 0 and 100. We’ll see how random it actually is with a linear histogram, bucketing the results into steps of 10:</p>
+<pre><code>bpftrace -e &#39;usdt::global:randist
+            {@ = lhist(arg0, 0, 100, 10)}&#39; -p $(pgrep -f ./randist.rb)
+Attaching 1 probe...</code></pre>
+<pre><code>@:
+[0, 10)      817142 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[10, 20)     815076 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+[20, 30)     815205 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+[30, 40)     814752 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+[40, 50)     815183 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+[50, 60)     816676 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+[60, 70)     816470 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+[70, 80)     815448 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+[80, 90)     816913 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+[90, 100)    814970 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ |
+</code></pre>
+<p>There are similar aggregation functions <span class="citation" data-cites="bpftrace-reference-guide">[<a href="#ref-bpftrace-reference-guide" role="doc-biblioref">4</a>]</span> for max, mean, count, etc that can be used to summarize large data sets - check them out!</p>
+<h2 id="latency-distributions">Latency distributions</h2>
+<p>This example will profile the function call that we use for getting the current monotonic time in nanoseconds:</p>
+<pre><code>StaticTracing.nsec</code></pre>
+<p>Under the hood, this is just calling a libc function to get the current time against a monotonic source. This is how we calculate the latency in wall-clock time. Since we will be potentially running this quite a lot, we want it to be fast!</p>
+<p>For this example, we’ll use <a href="https://github.com/dalehamel/usdt-report-doc/blob/gh-pages/examples/nsec.rb">nsec.rb</a> script to compute the latency of this call and fire it off in a probe.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">#!/usr/bin/env ruby</span></a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3">require <span class="st">&#39;ruby-static-tracing&#39;</span></a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5">t = <span class="dt">StaticTracing</span>::<span class="dt">Tracepoint</span>.new(<span class="st">&#39;global&#39;</span>, <span class="st">&#39;nsec_latency&#39;</span>, <span class="dt">Integer</span>)</a>
+<a class="sourceLine" id="cb13-6" title="6">t.provider.enable</a>
+<a class="sourceLine" id="cb13-7" title="7"></a>
+<a class="sourceLine" id="cb13-8" title="8">loop <span class="kw">do</span></a>
+<a class="sourceLine" id="cb13-9" title="9">  s = <span class="dt">StaticTracing</span>.nsec</a>
+<a class="sourceLine" id="cb13-10" title="10">  <span class="dt">StaticTracing</span>.nsec</a>
+<a class="sourceLine" id="cb13-11" title="11">  f = <span class="dt">StaticTracing</span>.nsec</a>
+<a class="sourceLine" id="cb13-12" title="12">  t.fire(f-s)</a>
+<a class="sourceLine" id="cb13-13" title="13">  sleep <span class="fl">0.001</span></a>
+<a class="sourceLine" id="cb13-14" title="14"><span class="kw">end</span></a></code></pre></div>
+<p>Attaching to it with a log2 histogram, we can see that it clusters within a particular latency range:</p>
+<pre><code>bpftrace -e &#39;usdt::global:nsec_latency
+            {@ = hist(arg0)}&#39; -p $(pgrep -f ./nsec.rb)
+Attaching 1 probe...</code></pre>
+<pre><code>@:
+[256, 512)            65 |                                                    |
+[512, 1K)            162 |@@                                                  |
+[1K, 2K)            3647 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[2K, 4K)            3250 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@      |
+[4K, 8K)               6 |                                                    |
+[8K, 16K)              0 |                                                    |
+[16K, 32K)            12 |                                                    |
+[32K, 64K)             2 |                                                    |
+</code></pre>
+<p>Let’s zoom in on that with a linear histogram to get a better idea of the latency distribution:</p>
+<pre><code>bpftrace -e &#39;usdt::global:nsec_latency
+            {@ = lhist(arg0, 0, 3000, 100)}&#39; -p $(pgrep -f ./nsec.rb)
+Attaching 1 probe...</code></pre>
+<pre><code>@:
+[300, 400)         1 |                                                    |
+[400, 500)        33 |@                                                   |
+[500, 600)        50 |@@                                                  |
+[600, 700)        49 |@@                                                  |
+[700, 800)        42 |@@                                                  |
+[800, 900)        21 |@                                                   |
+[900, 1000)       15 |                                                    |
+[1000, 1100)       9 |                                                    |
+[1100, 1200)      11 |                                                    |
+[1200, 1300)       4 |                                                    |
+[1300, 1400)      16 |                                                    |
+[1400, 1500)       9 |                                                    |
+[1500, 1600)       7 |                                                    |
+[1600, 1700)       8 |                                                    |
+[1700, 1800)      70 |@@@                                                 |
+[1800, 1900)     419 |@@@@@@@@@@@@@@@@@@@@@                               |
+[1900, 2000)     997 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[2000, 2100)     564 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                       |
+[2100, 2200)      98 |@@@@@                                               |
+[2200, 2300)      37 |@                                                   |
+[2300, 2400)      30 |@                                                   |
+[2400, 2500)      36 |@                                                   |
+[2500, 2600)      46 |@@                                                  |
+[2600, 2700)      86 |@@@@                                                |
+[2700, 2800)      74 |@@@                                                 |
+[2800, 2900)      42 |@@                                                  |
+[2900, 3000)      26 |@                                                   |
+[3000, ...)       35 |@                                                   |
+</code></pre>
+<p>We can see that most of the calls are happening within 1700-2200 nanoseconds, which is pretty blazing fast, around 1-2 microseconds. Some are faster, and some are slower, representing the long-tails of this distribution, but this can give us confidence that this call will complete quickly.</p>
+<h1 id="adding-usdt-support-to-a-dynamic-language">Adding USDT support to a dynamic language</h1>
+<h2 id="ruby-static-tracing">ruby-static-tracing</h2>
+<p>While USDT tracepoints are conventionally defined in C and C++ applications with a preprocessor macro, <code>systemtap</code> has created their own library for <code>sdt</code> tracepoints, which implement the same API as dtrace, on Linux. A wrapper around this, <code>libstapsdt</code><span class="citation" data-cites="libstapsdt">[<a href="#ref-libstapsdt" role="doc-biblioref">1</a>]</span> is used to generate and load tracepoints in a way that can be used in dynamic languages like Ruby.</p>
+<p><code>ruby-static-tracing</code> is a gem that demonstrates the powerful applications of USDT tracepoints. It wraps <code>libstapsdt</code> for Linux support, and <code>libusdt</code> for Darwin / OS X support. This allows the gem to expose the same public Ruby api, implemented against separate libraries with specific system support. Both of these libraries are vendored-in, and dynamically linked via <code>RPATH</code> modifications. On Linux, <code>libelf</code> is needed to build and run <code>libstapsdt</code>, on Darwin, <code>libusdt</code> is built as a dylib and loaded alongside the <code>ruby_static_tracing.so</code> app bundle.</p>
+<p><code>ruby-static-tracing</code> implements wrappers for <code>libstapsdt</code> through C extensions. The scaffold / general design of <code>ruby-static-tracing</code> is based on the <a href="https://github.com/Shopify/semian">semian gem</a>, and in the same way that Semian supports helpers to make it easier to use, we hope to mimic and take inspiration many of the same patterns to create tracers. Credit to the Semian authors Scott Francis <span class="citation" data-cites="csfrancis">[<a href="#ref-csfrancis" role="doc-biblioref">7</a>]</span> and Simon Hørup Eskildsen <span class="citation" data-cites="sirupsen">[<a href="#ref-sirupsen" role="doc-biblioref">8</a>]</span> for this design as starting point.</p>
+<p>In creating a tracepoint, we are calling the C code:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb18-1" title="1">VALUE</a>
+<a class="sourceLine" id="cb18-2" title="2">tracepoint_initialize(VALUE self, VALUE provider, VALUE name, VALUE vargs) {</a>
+<a class="sourceLine" id="cb18-3" title="3">  VALUE cStaticTracing, cProvider, cProviderInst;</a>
+<a class="sourceLine" id="cb18-4" title="4">  static_tracing_tracepoint_t *tracepoint = NULL;</a>
+<a class="sourceLine" id="cb18-5" title="5">  <span class="dt">const</span> <span class="dt">char</span> *c_name_str = NULL;</a>
+<a class="sourceLine" id="cb18-6" title="6">  <span class="dt">int</span> argc = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb18-7" title="7"></a>
+<a class="sourceLine" id="cb18-8" title="8">  c_name_str = check_name_arg(name);</a>
+<a class="sourceLine" id="cb18-9" title="9">  check_provider_arg(provider); <span class="co">// </span><span class="al">FIXME</span><span class="co"> should only accept string</span></a>
+<a class="sourceLine" id="cb18-10" title="10">  Tracepoint_arg_types *args = check_vargs(&amp;argc, vargs);</a>
+<a class="sourceLine" id="cb18-11" title="11"></a>
+<a class="sourceLine" id="cb18-12" title="12">  <span class="co">/// Get a handle to global provider list for lookup</span></a>
+<a class="sourceLine" id="cb18-13" title="13">  cStaticTracing = rb_const_get(rb_cObject, rb_intern(<span class="st">&quot;StaticTracing&quot;</span>));</a>
+<a class="sourceLine" id="cb18-14" title="14">  cProvider = rb_const_get(cStaticTracing, rb_intern(<span class="st">&quot;Provider&quot;</span>));</a>
+<a class="sourceLine" id="cb18-15" title="15">  cProviderInst = rb_funcall(cProvider, rb_intern(<span class="st">&quot;register&quot;</span>), <span class="dv">1</span>, provider);</a>
+<a class="sourceLine" id="cb18-16" title="16"></a>
+<a class="sourceLine" id="cb18-17" title="17">  <span class="co">// Use the provider to register a tracepoint</span></a>
+<a class="sourceLine" id="cb18-18" title="18">  SDTProbe_t *probe =</a>
+<a class="sourceLine" id="cb18-19" title="19">      provider_add_tracepoint_internal(cProviderInst, c_name_str, argc, args);</a>
+<a class="sourceLine" id="cb18-20" title="20">  TypedData_Get_Struct(self, static_tracing_tracepoint_t,</a>
+<a class="sourceLine" id="cb18-21" title="21">                       &amp;static_tracing_tracepoint_type, tracepoint);</a>
+<a class="sourceLine" id="cb18-22" title="22"></a>
+<a class="sourceLine" id="cb18-23" title="23">  <span class="co">// Stare the tracepoint handle in our struct</span></a>
+<a class="sourceLine" id="cb18-24" title="24">  tracepoint-&gt;sdt_tracepoint = probe;</a>
+<a class="sourceLine" id="cb18-25" title="25">  tracepoint-&gt;args = args;</a>
+<a class="sourceLine" id="cb18-26" title="26"></a>
+<a class="sourceLine" id="cb18-27" title="27">  <span class="cf">return</span> self;</a>
+<a class="sourceLine" id="cb18-28" title="28">}</a></code></pre></div>
+<p>You can see that the tracepoint will register a provider for itself if it hasn’t happened already, allowing for “implicit declarations” of providers on their first reference.</p>
+<p>And in firing a tracepoint, we’re just wrapping the call in <code>libstapsdt</code>:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb19-1" title="1">  <span class="cf">case</span> <span class="dv">1</span>:</a>
+<a class="sourceLine" id="cb19-2" title="2">    probeFire(res-&gt;sdt_tracepoint, args[<span class="dv">0</span>]);</a>
+<a class="sourceLine" id="cb19-3" title="3">    <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb19-4" title="4">  <span class="cf">case</span> <span class="dv">2</span>:</a>
+<a class="sourceLine" id="cb19-5" title="5">    probeFire(res-&gt;sdt_tracepoint, args[<span class="dv">0</span>], args[<span class="dv">1</span>]);</a>
+<a class="sourceLine" id="cb19-6" title="6">    <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb19-7" title="7">  <span class="cf">case</span> <span class="dv">3</span>:</a>
+<a class="sourceLine" id="cb19-8" title="8">    probeFire(res-&gt;sdt_tracepoint, args[<span class="dv">0</span>], args[<span class="dv">1</span>], args[<span class="dv">2</span>]);</a>
+<a class="sourceLine" id="cb19-9" title="9">    <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb19-10" title="10">  <span class="cf">case</span> <span class="dv">4</span>:</a>
+<a class="sourceLine" id="cb19-11" title="11">    probeFire(res-&gt;sdt_tracepoint, args[<span class="dv">0</span>], args[<span class="dv">1</span>], args[<span class="dv">2</span>], args[<span class="dv">3</span>]);</a>
+<a class="sourceLine" id="cb19-12" title="12">    <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb19-13" title="13">  <span class="cf">case</span> <span class="dv">5</span>:</a>
+<a class="sourceLine" id="cb19-14" title="14">    probeFire(res-&gt;sdt_tracepoint, args[<span class="dv">0</span>], args[<span class="dv">1</span>], args[<span class="dv">2</span>], args[<span class="dv">3</span>], args[<span class="dv">4</span>]);</a>
+<a class="sourceLine" id="cb19-15" title="15">    <span class="cf">break</span>;</a>
+<a class="sourceLine" id="cb19-16" title="16">  <span class="cf">case</span> <span class="dv">6</span>:</a>
+<a class="sourceLine" id="cb19-17" title="17">    probeFire(res-&gt;sdt_tracepoint, args[<span class="dv">0</span>], args[<span class="dv">1</span>], args[<span class="dv">2</span>], args[<span class="dv">3</span>], args[<span class="dv">4</span>],</a>
+<a class="sourceLine" id="cb19-18" title="18">              args[<span class="dv">5</span>]);</a></code></pre></div>
+<p>and the same for checking if a probe is enabled:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb20-1" title="1">VALUE</a>
+<a class="sourceLine" id="cb20-2" title="2">tracepoint_enabled(VALUE self) {</a>
+<a class="sourceLine" id="cb20-3" title="3">  static_tracing_tracepoint_t *res = NULL;</a>
+<a class="sourceLine" id="cb20-4" title="4">  TypedData_Get_Struct(self, static_tracing_tracepoint_t,</a>
+<a class="sourceLine" id="cb20-5" title="5">                       &amp;static_tracing_tracepoint_type, res);</a>
+<a class="sourceLine" id="cb20-6" title="6">  <span class="cf">return</span> probeIsEnabled(res-&gt;sdt_tracepoint) == <span class="dv">1</span> ? Qtrue : Qfalse;</a>
+<a class="sourceLine" id="cb20-7" title="7">}</a></code></pre></div>
+<p>In general, all of the direct <code>provider</code> and <code>tracepoint</code> functions are called directly through these C-extensions, wrapping around <code>libstapsdt</code> <span class="citation" data-cites="libstapsdt">[<a href="#ref-libstapsdt" role="doc-biblioref">1</a>]</span>.</p>
+<p>So to understand what happens when we call a tracepoint, we will need to dive into how <code>libstapsdt</code> works, to explain how we’re able to probe Ruby from the kernel.</p>
+<h2 id="libstapsdt">libstapsdt</h2>
+<p>This library was written by Matheus Marchini <span class="citation" data-cites="mmarchini">[<a href="#ref-mmarchini" role="doc-biblioref">9</a>]</span> and Willian Gaspar <span class="citation" data-cites="williangaspar">[<a href="#ref-williangaspar" role="doc-biblioref">10</a>]</span>, and provides a means of generating elf notes in a format compatible to <code>DTRACE</code> macros for generating elf notes on linux.</p>
+<p>For each provider declared, <code>libstapsdt</code> will create an <code>ELF</code> file that can be loaded directly into ruby’s address space through <code>dlopen</code>. As a compiler would normally embed these notes directly into a C program, <code>libstapsdt</code> matches this output format exactly. Once all of the tracepoints have been registered against a provider, it can be loaded into the ruby process’s address space through a <code>dlopen</code> call on a file descriptor for a temporary (or memory-backed) file containing the ELF notes.</p>
+<p>For each tracepoint that we add to each provider, <code>libstapsdt</code> will inject assembly for the definition of a function called <code>_funcStart</code>. This function is defined in an assembly file. You might be cringing at the thought of working with assembly directly, but this definition is quite simple:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode gnuassembler"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">_funcStart:</span></a>
+<a class="sourceLine" id="cb21-2" title="2">  nop</a>
+<a class="sourceLine" id="cb21-3" title="3">  nop</a>
+<a class="sourceLine" id="cb21-4" title="4">  nop</a>
+<a class="sourceLine" id="cb21-5" title="5">  nop</a>
+<a class="sourceLine" id="cb21-6" title="6">  ret</a></code></pre></div>
+<p>It simply inserts four <code>NOP</code> instructions, followed by a <code>RET</code>. In case you don’t speak assembly, this translates to instructions that say to “do nothing, and then return”.</p>
+<p>The address of this blob of assembly is used as the address of the function <code>probe._fire</code> in <code>libstapsdt</code>. So, each probe is calling into a memory region that we’ve dynamically loaded into memory, and the addresses of these probes can be computed by reading the elf notes on these generated stubs.</p>
+<p>To understand this better, we’ll dive into how <code>libstapsdt</code> works. This will take us all the way from the Ruby call, to down inside the kernel.</p>
+<h2 id="examining-the-dynamically-loaded-elf">Examining the dynamically loaded ELF</h2>
+<p>For our ruby process with a loaded provider, we can see the provider in the address space of the process:</p>
+<pre><code>cat /proc/22205/maps | grep libstapsdt:global
+</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" title="1"><span class="ex">7fc624c3b000-7fc624c3c000</span> r-xp [...] 9202140   /memfd:libstapsdt:global (deleted)</a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="ex">7fc624c3c000-7fc624e3b000</span> ---p [...] 9202140   /memfd:libstapsdt:global (deleted)</a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="ex">7fc624e3b000-7fc624e3c000</span> rw-p [...] 9202140   /memfd:libstapsdt:global (deleted)</a></code></pre></div>
+<p>The left-most field is the process memory that is mapped to this library. Note that it appears 3 times, for the different permission modes of the memory (second column). The number in the center is the inode associated with our memory image, and it is identical for all of them because they are all backed by the same memory-only file descriptor. This is why, to the very right, we see <code>(deleted)</code> - the file descriptor doesn’t actually exist on the filesystem at the address specified.</p>
+<p>This is because we are using a memory-backed file descriptor to store the ELF notes. The value shown here for <code>/memfd:[...]</code> is a special annotation for file descriptors that have no backing file and exist entirely in memory. We do this so that we don’t have to clean up the generated ELF files manually.</p>
+<p>In examining the file descriptors for this process, we find that one of them matches the name and apparent path of this file memory mapped segment:</p>
+<pre><code>$ readlink -f /proc/22205/fd/*
+/dev/pts/11
+/dev/pts/11
+/dev/pts/11
+/proc/22205/fd/pipe:[9202138]
+/proc/22205/fd/pipe:[9202138]
+/proc/22205/fd/pipe:[9202139]
+/proc/22205/fd/pipe:[9202139]
+/memfd:libstapsdt:global (deleted)
+/dev/null
+/dev/null</code></pre>
+<p>It happens to be at the path <code>/proc/22205/fd/7</code>. If we read our elf notes for this path, we get what we expect:</p>
+<pre><code>readelf --notes /proc/22205/fd/7</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode gnuassembler"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb26-1" title="1"></a>
+<a class="sourceLine" id="cb26-2" title="2">Displaying notes found <span class="kw">in:</span> .note.stapsdt</a>
+<a class="sourceLine" id="cb26-3" title="3">  Owner                 Data size       Description</a>
+<a class="sourceLine" id="cb26-4" title="4">  stapsdt              <span class="bn">0x00000039</span>       NT_STAPSDT (SystemTap probe descriptors)</a>
+<a class="sourceLine" id="cb26-5" title="5">    <span class="kw">Provider:</span> global</a>
+<a class="sourceLine" id="cb26-6" title="6">    <span class="kw">Name:</span> hello_nsec</a>
+<a class="sourceLine" id="cb26-7" title="7">    <span class="kw">Location:</span> <span class="bn">0x0000000000000280</span>, <span class="kw">Base:</span> <span class="bn">0x0000000000000340</span>, <span class="kw">Semaphore:</span> <span class="bn">0x0000000000000000</span></a>
+<a class="sourceLine" id="cb26-8" title="8">    <span class="kw">Arguments:</span> <span class="dv">8</span><span class="co">@%rdi -8@%rsi</span></a>
+<a class="sourceLine" id="cb26-9" title="9">  stapsdt              <span class="bn">0x0000002e</span>       NT_STAPSDT (SystemTap probe descriptors)</a>
+<a class="sourceLine" id="cb26-10" title="10">    <span class="kw">Provider:</span> global</a>
+<a class="sourceLine" id="cb26-11" title="11">    <span class="kw">Name:</span> enabled</a>
+<a class="sourceLine" id="cb26-12" title="12">    <span class="kw">Location:</span> <span class="bn">0x0000000000000285</span>, <span class="kw">Base:</span> <span class="bn">0x0000000000000340</span>, <span class="kw">Semaphore:</span> <span class="bn">0x0000000000000000</span></a>
+<a class="sourceLine" id="cb26-13" title="13">    <span class="kw">Arguments:</span> <span class="dv">8</span><span class="co">@%rdi</span></a></code></pre></div>
+<p>And, if we just read the memory space directly using the addresses for our ELF blob earlier:</p>
+<pre><code>readelf --notes /proc/22205/map_files/7fc624c3b000-7fc624c3c000</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode gnuassembler"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb28-1" title="1"></a>
+<a class="sourceLine" id="cb28-2" title="2">Displaying notes found <span class="kw">in:</span> .note.stapsdt</a>
+<a class="sourceLine" id="cb28-3" title="3">  Owner                 Data size       Description</a>
+<a class="sourceLine" id="cb28-4" title="4">  stapsdt              <span class="bn">0x00000039</span>       NT_STAPSDT (SystemTap probe descriptors)</a>
+<a class="sourceLine" id="cb28-5" title="5">    <span class="kw">Provider:</span> global</a>
+<a class="sourceLine" id="cb28-6" title="6">    <span class="kw">Name:</span> hello_nsec</a>
+<a class="sourceLine" id="cb28-7" title="7">    <span class="kw">Location:</span> <span class="bn">0x0000000000000280</span>, <span class="kw">Base:</span> <span class="bn">0x0000000000000340</span>, <span class="kw">Semaphore:</span> <span class="bn">0x0000000000000000</span></a>
+<a class="sourceLine" id="cb28-8" title="8">    <span class="kw">Arguments:</span> <span class="dv">8</span><span class="co">@%rdi -8@%rsi</span></a>
+<a class="sourceLine" id="cb28-9" title="9">  stapsdt              <span class="bn">0x0000002e</span>       NT_STAPSDT (SystemTap probe descriptors)</a>
+<a class="sourceLine" id="cb28-10" title="10">    <span class="kw">Provider:</span> global</a>
+<a class="sourceLine" id="cb28-11" title="11">    <span class="kw">Name:</span> enabled</a>
+<a class="sourceLine" id="cb28-12" title="12">    <span class="kw">Location:</span> <span class="bn">0x0000000000000285</span>, <span class="kw">Base:</span> <span class="bn">0x0000000000000340</span>, <span class="kw">Semaphore:</span> <span class="bn">0x0000000000000000</span></a>
+<a class="sourceLine" id="cb28-13" title="13">    <span class="kw">Arguments:</span> <span class="dv">8</span><span class="co">@%rdi</span></a></code></pre></div>
+<p>We see that it matches exactly!</p>
+<p>Notice that the location of <code>global:hello_nsec</code> is <code>0x0280</code> in the elf notes.</p>
+<p>Now we will use <code>gdb</code> to dump the memory for our program so that we can examine the hexadecimal of its address space.</p>
+<pre><code>sudo gdb --pid 22205
+(gdb) dump memory unattached 0x7fc624c3b000 0x7fc624c3c000</code></pre>
+<pre><code>hexdump -C unattached</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode gnuassembler"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb31-1" title="1"><span class="dv">00000230</span>  <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  <span class="dv">14</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">10</span> <span class="dv">00</span> <span class="dv">07</span> <span class="dv">00</span>  |................|</a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="dv">00000240</span>  <span class="dv">20</span> <span class="dv">01</span> <span class="dv">20</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  | . .............|</a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="dv">00000250</span>  <span class="dv">00</span> 5f 5f <span class="dv">62</span> <span class="dv">73</span> <span class="dv">73</span> 5f <span class="dv">73</span>  <span class="dv">74</span> <span class="dv">61</span> <span class="dv">72</span> <span class="dv">74</span> <span class="dv">00</span> 5f <span class="dv">65</span> <span class="dv">64</span>  |.__bss_start._ed|</a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="dv">00000260</span>  <span class="dv">61</span> <span class="dv">74</span> <span class="dv">61</span> <span class="dv">00</span> 5f <span class="dv">65</span> 6e <span class="dv">64</span>  <span class="dv">00</span> <span class="dv">65</span> 6e <span class="dv">61</span> <span class="dv">62</span> 6c <span class="dv">65</span> <span class="dv">64</span>  |ata._end.enabled|</a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="dv">00000270</span>  <span class="dv">00</span> <span class="dv">68</span> <span class="dv">65</span> 6c 6c 6f 5f 6e  <span class="dv">73</span> <span class="dv">65</span> <span class="dv">63</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |.hello_nsec.....|</a>
+<a class="sourceLine" id="cb31-6" title="6"><span class="dv">00000280</span>  <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span> c3 <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span>  <span class="dv">90</span> c3 <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |................|</a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="dv">00000290</span>  <span class="dv">04</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  <span class="dv">78</span> <span class="dv">01</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |........x.......|</a>
+<a class="sourceLine" id="cb31-8" title="8">000002a0  <span class="dv">05</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  <span class="dv">50</span> <span class="dv">02</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |........P.......|</a>
+<a class="sourceLine" id="cb31-9" title="9">000002b0  <span class="dv">06</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  a8 <span class="dv">01</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |................|</a>
+<a class="sourceLine" id="cb31-10" title="10">000002c0  0a <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  2c <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |........,.......|</a></code></pre></div>
+<p>Lets take a closer look at that address 0x280:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode gnuassembler"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb32-1" title="1"><span class="dv">00000280</span>  <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span> c3 <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span>  <span class="dv">90</span> c3 <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |................|</a></code></pre></div>
+<p>Those first 5 bytes look familiar! Recall the definition of <code>_funcStart</code> earlier:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode gnuassembler"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">_funcStart:</span></a>
+<a class="sourceLine" id="cb33-2" title="2">  nop</a>
+<a class="sourceLine" id="cb33-3" title="3">  nop</a>
+<a class="sourceLine" id="cb33-4" title="4">  nop</a>
+<a class="sourceLine" id="cb33-5" title="5">  nop</a>
+<a class="sourceLine" id="cb33-6" title="6">  ret</a></code></pre></div>
+<p>The assembly instruction <code>NOP</code> corresponds to <code>0x90</code> on x86 platforms, and the assembly instruction <code>RET</code> corresponds to <code>0xc3</code>. So, we’re looking at the machine code for the stub function that we created with <code>libstapsdt</code>. This is the code that will be executed every time we call <code>fire</code> in userspace. The processor will run four <code>NOP</code> instructions, and then return.</p>
+<p>As we can see in <code>libstapsdt</code>, the address of <code>probe._fire</code> is set from the location of the probe’s name, as calculated from the ELF offset:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb34-1" title="1">  <span class="cf">for</span>(SDTProbeList_t *node=provider-&gt;probes; node != NULL; node = node-&gt;next) {</a>
+<a class="sourceLine" id="cb34-2" title="2">    fireProbe = dlsym(provider-&gt;_handle, node-&gt;probe.name);</a>
+<a class="sourceLine" id="cb34-3" title="3"></a>
+<a class="sourceLine" id="cb34-4" title="4">    <span class="co">// </span><span class="al">TODO</span><span class="co"> (mmarchini) handle errors better when a symbol fails to load</span></a>
+<a class="sourceLine" id="cb34-5" title="5">    <span class="cf">if</span> ((error = dlerror()) != NULL) {</a>
+<a class="sourceLine" id="cb34-6" title="6">      sdtSetError(provider, sharedLibraryOpenError, provider-&gt;_filename,</a>
+<a class="sourceLine" id="cb34-7" title="7">                  node-&gt;probe.name, error);</a>
+<a class="sourceLine" id="cb34-8" title="8">      <span class="cf">return</span> -<span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb34-9" title="9">    }</a>
+<a class="sourceLine" id="cb34-10" title="10"></a>
+<a class="sourceLine" id="cb34-11" title="11">    node-&gt;probe._fire = fireProbe;</a>
+<a class="sourceLine" id="cb34-12" title="12">  }</a></code></pre></div>
+<p>So this is what the memory space looks like where we’ve loaded our ELF stubs, and we can see how userspace <code>libstapsdt</code> operations work.</p>
+<p>For instance, the code that checks if a provider is enabled:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb35-1" title="1"><span class="dt">int</span> probeIsEnabled(SDTProbe_t *probe) {</a>
+<a class="sourceLine" id="cb35-2" title="2">  <span class="cf">if</span>(probe-&gt;_fire == NULL) {</a>
+<a class="sourceLine" id="cb35-3" title="3">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb35-4" title="4">  }</a>
+<a class="sourceLine" id="cb35-5" title="5">  <span class="cf">if</span>(((*(<span class="dt">char</span> *)probe-&gt;_fire) &amp; <span class="bn">0x90</span>) == <span class="bn">0x90</span>) {</a>
+<a class="sourceLine" id="cb35-6" title="6">    <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb35-7" title="7">  }</a>
+<a class="sourceLine" id="cb35-8" title="8">  <span class="cf">return</span> <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb35-9" title="9">}</a></code></pre></div>
+<p>It is simply checking the memoryspace to see if the address of the function starts with a <code>NOP</code> instruction (<code>0x90</code>).</p>
+<p>Now, if we attach to our program with <code>bpftrace</code>, we’ll see the effect that attaching a uprobe to this address will have.</p>
+<p>Dumping the same memory again with <code>gdb</code>:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode gnuassembler"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb36-1" title="1"><span class="dv">00000230</span>  <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  <span class="dv">14</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">10</span> <span class="dv">00</span> <span class="dv">07</span> <span class="dv">00</span>  |................|</a>
+<a class="sourceLine" id="cb36-2" title="2"><span class="dv">00000240</span>  <span class="dv">20</span> <span class="dv">01</span> <span class="dv">20</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  | . .............|</a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="dv">00000250</span>  <span class="dv">00</span> 5f 5f <span class="dv">62</span> <span class="dv">73</span> <span class="dv">73</span> 5f <span class="dv">73</span>  <span class="dv">74</span> <span class="dv">61</span> <span class="dv">72</span> <span class="dv">74</span> <span class="dv">00</span> 5f <span class="dv">65</span> <span class="dv">64</span>  |.__bss_start._ed|</a>
+<a class="sourceLine" id="cb36-4" title="4"><span class="dv">00000260</span>  <span class="dv">61</span> <span class="dv">74</span> <span class="dv">61</span> <span class="dv">00</span> 5f <span class="dv">65</span> 6e <span class="dv">64</span>  <span class="dv">00</span> <span class="dv">65</span> 6e <span class="dv">61</span> <span class="dv">62</span> 6c <span class="dv">65</span> <span class="dv">64</span>  |ata._end.enabled|</a>
+<a class="sourceLine" id="cb36-5" title="5"><span class="dv">00000270</span>  <span class="dv">00</span> <span class="dv">68</span> <span class="dv">65</span> 6c 6c 6f 5f 6e  <span class="dv">73</span> <span class="dv">65</span> <span class="dv">63</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |.hello_nsec.....|</a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="dv">00000280</span>  cc <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span> c3 <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span>  <span class="dv">90</span> c3 <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |................|</a>
+<a class="sourceLine" id="cb36-7" title="7"><span class="dv">00000290</span>  <span class="dv">04</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  <span class="dv">78</span> <span class="dv">01</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |........x.......|</a>
+<a class="sourceLine" id="cb36-8" title="8">000002a0  <span class="dv">05</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  <span class="dv">50</span> <span class="dv">02</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |........P.......|</a>
+<a class="sourceLine" id="cb36-9" title="9">000002b0  <span class="dv">06</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  a8 <span class="dv">01</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |................|</a>
+<a class="sourceLine" id="cb36-10" title="10">000002c0  0a <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  2c <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |........,.......|</a></code></pre></div>
+<p>We see that the first byte of our function has changed!</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode gnuassembler"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb37-1" title="1"><span class="dv">00000280</span>  cc <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span> c3 <span class="dv">90</span> <span class="dv">90</span> <span class="dv">90</span>  <span class="dv">90</span> c3 <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span> <span class="dv">00</span>  |................|</a></code></pre></div>
+<p>Where we previously had a function that did <code>NOP NOP NOP NOP RET</code>, we now have the new instruction <code>0xCC</code>, which on x86 platforms is the “breakpoint” instruction known as <code>int3</code>.</p>
+<p>When our enabled check runs now, it will see that the bytes at the start of the function are not a <code>NOP</code>, and are <code>INT3</code> instead. Now that our function is enabled, our code will allow us to call <code>probe._fire</code>.</p>
+<p>We can pass up to 6 arguments when firing the probe. The code in <code>libstapsdt</code> simply passes every possibly arg count from a variadic list signature using a <code>switch</code> statement:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb38-1" title="1">  <span class="cf">switch</span>(probe-&gt;argCount) {</a>
+<a class="sourceLine" id="cb38-2" title="2">    <span class="cf">case</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb38-3" title="3">      ((<span class="dt">void</span> (*)())probe-&gt;_fire) ();</a>
+<a class="sourceLine" id="cb38-4" title="4">      <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb38-5" title="5">    <span class="cf">case</span> <span class="dv">1</span>:</a>
+<a class="sourceLine" id="cb38-6" title="6">      ((<span class="dt">void</span> (*)())probe-&gt;_fire) (arg[<span class="dv">0</span>]);</a>
+<a class="sourceLine" id="cb38-7" title="7">      <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb38-8" title="8">    <span class="cf">case</span> <span class="dv">2</span>:</a>
+<a class="sourceLine" id="cb38-9" title="9">      ((<span class="dt">void</span> (*)())probe-&gt;_fire) (arg[<span class="dv">0</span>], arg[<span class="dv">1</span>]);</a>
+<a class="sourceLine" id="cb38-10" title="10">      <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb38-11" title="11">    <span class="cf">case</span> <span class="dv">3</span>:</a>
+<a class="sourceLine" id="cb38-12" title="12">      ((<span class="dt">void</span> (*)())probe-&gt;_fire) (arg[<span class="dv">0</span>], arg[<span class="dv">1</span>], arg[<span class="dv">2</span>]);</a>
+<a class="sourceLine" id="cb38-13" title="13">      <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb38-14" title="14">    <span class="cf">case</span> <span class="dv">4</span>:</a>
+<a class="sourceLine" id="cb38-15" title="15">      ((<span class="dt">void</span> (*)())probe-&gt;_fire) (arg[<span class="dv">0</span>], arg[<span class="dv">1</span>], arg[<span class="dv">2</span>], arg[<span class="dv">3</span>]);</a>
+<a class="sourceLine" id="cb38-16" title="16">      <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb38-17" title="17">    <span class="cf">case</span> <span class="dv">5</span>:</a>
+<a class="sourceLine" id="cb38-18" title="18">      ((<span class="dt">void</span> (*)())probe-&gt;_fire) (arg[<span class="dv">0</span>], arg[<span class="dv">1</span>], arg[<span class="dv">2</span>], arg[<span class="dv">3</span>], arg[<span class="dv">4</span>]);</a>
+<a class="sourceLine" id="cb38-19" title="19">      <span class="cf">return</span>;</a>
+<a class="sourceLine" id="cb38-20" title="20">    <span class="cf">case</span> <span class="dv">6</span>:</a>
+<a class="sourceLine" id="cb38-21" title="21">      ((<span class="dt">void</span> (*)())probe-&gt;_fire) (arg[<span class="dv">0</span>], arg[<span class="dv">1</span>], arg[<span class="dv">2</span>], arg[<span class="dv">3</span>], arg[<span class="dv">4</span>], arg[<span class="dv">5</span>]);</a>
+<a class="sourceLine" id="cb38-22" title="22">      <span class="cf">return</span>;</a></code></pre></div>
+<p>When the address is called, the arguments passed in will be pushed onto the stack for this function call. This is how our probe is able to read arguments - by examining the address space of the caller’s stack.</p>
+<h3 id="int3-0xcc-nop-0x90-and-uprobes">int3 (0xCC), NOP (0x90) and uprobes</h3>
+<p>When the probe is fired, the kernel begins its trap handler. We can see this by running a trace of the kernel’s trap handler while we attach our probe:</p>
+<pre><code>$ bpftrace -e &#39;kprobe:is_trap_insn { printf(&quot;%s\n&quot;, kstack) }&#39;
+Attaching 1 probe...
+
+        is_trap_insn+1
+        install_breakpoint.isra.12+546
+        register_for_each_vma+792
+        uprobe_apply+109
+        trace_uprobe_register+429
+        perf_trace_event_init+95
+        perf_uprobe_init+189
+        perf_uprobe_event_init+65
+        perf_try_init_event+165
+        perf_event_alloc+1539
+        __se_sys_perf_event_open+401
+        do_syscall_64+90
+        entry_SYSCALL_64_after_hwframe+73</code></pre>
+<p>We can see that attaching the uprobe via the perf event is what causes the probe to be enabled, and this is visible to the userspace process.</p>
+<p>When an enabled probe is fired, the trap handler is called.</p>
+<p><code>int3</code> is a special debugging/breakpoint instruction with opcode <code>0xCC</code>. When a uprobe is enabled, it will overwrite the memory at the probe point with this single-byte instruction, and save the original byte for when execution is resumed. Upon executing this instruction, the uprobe is triggered and the handle routine is executed. Upon completion of the handler routine, the original assembly is executed.</p>
+<p>As we showed above, the address where we place the uprobe is actually in the mapped address space of the generated ELF binary, and a NOP instruction (0x90) is all we are overwriting.</p>
+<p>So, in order to check if a tracepoint is enabled, we just check the address of our tracepoint to see if it contains a NOP instruction. If it does, then the tracepoint isn’t enabled. If it doesn’t, then a uprobe has placed a 0xCC instruction here, and we know to execute our tracepoint logic.</p>
+<p>Upon firing the probe, libstapsdt will actually execute the code at this address, letting the kernel “take the wheel” briefly, to collect the trace data. This will execute our eBPF program that collects the tracepoint data and buffers it inside the kernel, then hand control back to our userspace ruby process.</p>
+<figure>
+<img src="./img/instruction-probes-workflow-z1-escaped.png" alt="eBPF handler injection from uprobe" /><figcaption>eBPF handler injection from uprobe</figcaption>
+</figure>
+<p>Diagram credit <span class="citation" data-cites="uprobes-int3-insn">[<a href="#ref-uprobes-int3-insn" role="doc-biblioref">11</a>]</span>.</p>
+<h3 id="usdt-read-arguments">USDT read arguments</h3>
+<p>Here we can see how arguments are pulled off the stack by bpftrace.</p>
+<p>Its call to <code>bcc</code>’s <code>bcc_usdt_get_argument</code> builds up an argument struct:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb40-1" title="1">  argument-&gt;size = arg.arg_size();</a>
+<a class="sourceLine" id="cb40-2" title="2">  argument-&gt;valid = BCC_USDT_ARGUMENT_NONE;</a>
+<a class="sourceLine" id="cb40-3" title="3">  <span class="cf">if</span> (arg.constant()) {</a>
+<a class="sourceLine" id="cb40-4" title="4">    argument-&gt;valid |= BCC_USDT_ARGUMENT_CONSTANT;</a>
+<a class="sourceLine" id="cb40-5" title="5">    argument-&gt;constant = *(arg.constant());</a>
+<a class="sourceLine" id="cb40-6" title="6">  }</a>
+<a class="sourceLine" id="cb40-7" title="7">  <span class="cf">if</span> (arg.deref_offset()) {</a>
+<a class="sourceLine" id="cb40-8" title="8">    argument-&gt;valid |= BCC_USDT_ARGUMENT_DEREF_OFFSET;</a>
+<a class="sourceLine" id="cb40-9" title="9">    argument-&gt;deref_offset = *(arg.deref_offset());</a>
+<a class="sourceLine" id="cb40-10" title="10">  }</a>
+<a class="sourceLine" id="cb40-11" title="11">  <span class="cf">if</span> (arg.deref_ident()) {</a>
+<a class="sourceLine" id="cb40-12" title="12">    argument-&gt;valid |= BCC_USDT_ARGUMENT_DEREF_IDENT;</a>
+<a class="sourceLine" id="cb40-13" title="13">    argument-&gt;deref_ident = arg.deref_ident()-&gt;c_str();</a>
+<a class="sourceLine" id="cb40-14" title="14">  }</a>
+<a class="sourceLine" id="cb40-15" title="15">  <span class="cf">if</span> (arg.base_register_name()) {</a>
+<a class="sourceLine" id="cb40-16" title="16">    argument-&gt;valid |= BCC_USDT_ARGUMENT_BASE_REGISTER_NAME;</a>
+<a class="sourceLine" id="cb40-17" title="17">    argument-&gt;base_register_name = arg.base_register_name()-&gt;c_str();</a>
+<a class="sourceLine" id="cb40-18" title="18">  }</a>
+<a class="sourceLine" id="cb40-19" title="19">  <span class="cf">if</span> (arg.index_register_name()) {</a>
+<a class="sourceLine" id="cb40-20" title="20">    argument-&gt;valid |= BCC_USDT_ARGUMENT_INDEX_REGISTER_NAME;</a>
+<a class="sourceLine" id="cb40-21" title="21">    argument-&gt;index_register_name = arg.index_register_name()-&gt;c_str();</a>
+<a class="sourceLine" id="cb40-22" title="22">  }</a></code></pre></div>
+<p>These functions are implemented using platform-specific assembly to read the arguments off of the stack.</p>
+<p>We can see that the special format string for the argument in the ELF notes, eg <code>8@%rdi</code>, is parsed to determine the address to read the argument from:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb41-1" title="1"><span class="dt">ssize_t</span> ArgumentParser_x64::parse_expr(<span class="dt">ssize_t</span> pos, Argument *dest) {</a>
+<a class="sourceLine" id="cb41-2" title="2">  <span class="cf">if</span> (arg_[pos] == <span class="ch">&#39;$&#39;</span>)</a>
+<a class="sourceLine" id="cb41-3" title="3">    <span class="cf">return</span> parse_number(pos + <span class="dv">1</span>, &amp;dest-&gt;constant_);</a>
+<a class="sourceLine" id="cb41-4" title="4"></a>
+<a class="sourceLine" id="cb41-5" title="5">  <span class="cf">if</span> (arg_[pos] == <span class="ch">&#39;%&#39;</span>)</a>
+<a class="sourceLine" id="cb41-6" title="6">    <span class="cf">return</span> parse_base_register(pos, dest);</a>
+<a class="sourceLine" id="cb41-7" title="7"></a>
+<a class="sourceLine" id="cb41-8" title="8">  <span class="cf">if</span> (isdigit(arg_[pos]) || arg_[pos] == <span class="ch">&#39;-&#39;</span>) {</a>
+<a class="sourceLine" id="cb41-9" title="9">    pos = parse_number(pos, &amp;dest-&gt;deref_offset_);</a>
+<a class="sourceLine" id="cb41-10" title="10">    <span class="cf">if</span> (arg_[pos] == <span class="ch">&#39;+&#39;</span>) {</a>
+<a class="sourceLine" id="cb41-11" title="11">      pos = parse_identifier(pos + <span class="dv">1</span>, &amp;dest-&gt;deref_ident_);</a>
+<a class="sourceLine" id="cb41-12" title="12">      <span class="cf">if</span> (!dest-&gt;deref_ident_)</a>
+<a class="sourceLine" id="cb41-13" title="13">        <span class="cf">return</span> -pos;</a>
+<a class="sourceLine" id="cb41-14" title="14">    }</a>
+<a class="sourceLine" id="cb41-15" title="15">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb41-16" title="16">    dest-&gt;deref_offset_ = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb41-17" title="17">    pos = parse_identifier(pos, &amp;dest-&gt;deref_ident_);</a>
+<a class="sourceLine" id="cb41-18" title="18">    <span class="cf">if</span> (arg_[pos] == <span class="ch">&#39;+&#39;</span> || arg_[pos] == <span class="ch">&#39;-&#39;</span>) {</a>
+<a class="sourceLine" id="cb41-19" title="19">      pos = parse_number(pos, &amp;dest-&gt;deref_offset_);</a>
+<a class="sourceLine" id="cb41-20" title="20">    }</a>
+<a class="sourceLine" id="cb41-21" title="21">  }</a></code></pre></div>
+<p>This how each platform is able to parse out the argument notation, to know where and how to pull the data out of the callstack.</p>
+<h1 id="usdt-tracing-in-rails">USDT tracing in rails</h1>
+<p>A <a href="https://github.com/dalehamel/usdt-rails-sample">sample app</a> <span class="citation" data-cites="usdt-rails-sample">[<a href="#ref-usdt-rails-sample" role="doc-biblioref">12</a>]</span> is used to explain the usage of tracers from <code>ruby-static-tracing</code> in Rails. This functionality was developed during a Hackdays event, with credit to Derek Stride <span class="citation" data-cites="derekstride">[<a href="#ref-derekstride" role="doc-biblioref">13</a>]</span>, Matt Valentine-House <span class="citation" data-cites="eightbitraptor">[<a href="#ref-eightbitraptor" role="doc-biblioref">14</a>]</span>, and Gustavo Caso <span class="citation" data-cites="gustavocaso">[<a href="#ref-gustavocaso" role="doc-biblioref">15</a>]</span>.</p>
+<p>We can add <code>ruby-static-tracing</code> <span class="citation" data-cites="ruby-static-tracing">[<a href="#ref-ruby-static-tracing" role="doc-biblioref">2</a>]</span> to our rails enabling tracers in our application config:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb42-1" title="1">require <span class="st">&#39;ruby-static-tracing&#39;</span></a>
+<a class="sourceLine" id="cb42-2" title="2">require <span class="st">&#39;ruby-static-tracing/tracer/concerns/latency_tracer&#39;</span></a>
+<a class="sourceLine" id="cb42-3" title="3"></a>
+<a class="sourceLine" id="cb42-4" title="4"><span class="dt">StaticTracing</span>.configure <span class="kw">do</span> |config|</a>
+<a class="sourceLine" id="cb42-5" title="5">  config.add_tracer(<span class="dt">StaticTracing</span>::<span class="dt">Tracer</span>::<span class="dt">Latency</span>)</a>
+<a class="sourceLine" id="cb42-6" title="6"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb42-7" title="7"></a>
+<a class="sourceLine" id="cb42-8" title="8"><span class="co"># Require the gems listed in Gemfile, including any gems</span></a>
+<a class="sourceLine" id="cb42-9" title="9"><span class="co"># you&#39;ve limited to :test, :development, or :production.</span></a>
+<a class="sourceLine" id="cb42-10" title="10"><span class="dt">Bundler</span>.require(*<span class="dt">Rails</span>.groups)</a>
+<a class="sourceLine" id="cb42-11" title="11"></a>
+<a class="sourceLine" id="cb42-12" title="12"><span class="kw">module</span> <span class="dt">UsdtRails</span></a>
+<a class="sourceLine" id="cb42-13" title="13">  <span class="kw">class</span> <span class="dt">Application</span> &lt; <span class="dt">Rails</span>::<span class="dt">Application</span></a>
+<a class="sourceLine" id="cb42-14" title="14">    <span class="co"># Initialize configuration defaults for originally generated Rails version.</span></a>
+<a class="sourceLine" id="cb42-15" title="15">    config.load_defaults <span class="fl">5.2</span></a>
+<a class="sourceLine" id="cb42-16" title="16"></a>
+<a class="sourceLine" id="cb42-17" title="17">    config.after_initialize { eager_load! }</a></code></pre></div>
+<p>Then, for the controller we want to trace we just need to include our latency tracer:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">class</span> <span class="dt">SampleController</span> &lt; <span class="dt">ApplicationController</span></a>
+<a class="sourceLine" id="cb43-2" title="2">  <span class="kw">def</span> all</a>
+<a class="sourceLine" id="cb43-3" title="3">    <span class="dv">1000</span>.times <span class="kw">do</span></a>
+<a class="sourceLine" id="cb43-4" title="4">      ([] &lt;&lt; <span class="dv">1</span>) * <span class="dv">100_000</span></a>
+<a class="sourceLine" id="cb43-5" title="5">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb43-6" title="6">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb43-7" title="7"></a>
+<a class="sourceLine" id="cb43-8" title="8">  <span class="kw">def</span> welcome</a>
+<a class="sourceLine" id="cb43-9" title="9">    <span class="dv">100</span>.times <span class="kw">do</span></a>
+<a class="sourceLine" id="cb43-10" title="10">      ([] &lt;&lt; <span class="dv">1</span>) * <span class="dv">100_000</span></a>
+<a class="sourceLine" id="cb43-11" title="11">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb43-12" title="12">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb43-13" title="13"></a>
+<a class="sourceLine" id="cb43-14" title="14">  <span class="kw">def</span> slow</a>
+<a class="sourceLine" id="cb43-15" title="15">    sleep(rand(<span class="fl">0.5</span>..<span class="fl">1.5</span>))</a>
+<a class="sourceLine" id="cb43-16" title="16">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb43-17" title="17"></a>
+<a class="sourceLine" id="cb43-18" title="18">  <span class="kw">def</span> random</a>
+<a class="sourceLine" id="cb43-19" title="19">    sleep(rand(<span class="dv">0</span>..<span class="fl">0.9</span>))</a>
+<a class="sourceLine" id="cb43-20" title="20">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb43-21" title="21"></a>
+<a class="sourceLine" id="cb43-22" title="22"></a>
+<a class="sourceLine" id="cb43-23" title="23">  include <span class="dt">StaticTracing</span>::<span class="dt">Tracer</span>::<span class="dt">Concerns</span>::<span class="dt">Latency</span></a>
+<a class="sourceLine" id="cb43-24" title="24"><span class="kw">end</span></a></code></pre></div>
+<p>When we start up our app, we don’t actually see the tracepoints we’re looking for because they aren’t enabled by default. The following returns nothing:</p>
+<pre><code>$ bpftrace -l &#39;usdt:*:sample_controller:*&#39; -p 10954</code></pre>
+<p>But, if we enable it with <code>SIGPROF</code>:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" title="1"><span class="bu">kill</span> -SIGPROF 10954</a></code></pre></div>
+<p>We now see some output:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb46-1" title="1">$ <span class="ex">bpftrace</span> -l <span class="st">&#39;usdt:*:sample_controller:*&#39;</span> -p 10954</a>
+<a class="sourceLine" id="cb46-2" title="2"><span class="ex">usdt</span>:/proc/10954/fd/21:sample_controller:random</a>
+<a class="sourceLine" id="cb46-3" title="3"><span class="ex">usdt</span>:/proc/10954/fd/21:sample_controller:welcome</a>
+<a class="sourceLine" id="cb46-4" title="4"><span class="ex">usdt</span>:/proc/10954/fd/21:sample_controller:slow</a>
+<a class="sourceLine" id="cb46-5" title="5"><span class="ex">usdt</span>:/proc/10954/fd/21:sample_controller:all</a></code></pre></div>
+<p>So we’ll attach to each of these, and print a histogram of the latency for each:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb47-1" title="1">$ <span class="ex">bpftrace</span> -e <span class="st">&#39;usdt::sample_controller:*</span></a>
+<a class="sourceLine" id="cb47-2" title="2"><span class="st">               { @[str(arg0)] = lhist(arg1/1000000, 0, 2000, 100); }&#39;</span> -p 10954</a>
+<a class="sourceLine" id="cb47-3" title="3"><span class="ex">Attaching</span> 4 probes...</a></code></pre></div>
+<p>While the bpftrace is running, we’ll send some work to our sample app. We’ll fire up a script <span class="citation" data-cites="wrk-http-benchmark">[<a href="#ref-wrk-http-benchmark" role="doc-biblioref">16</a>]</span> to generate some traffic using <code>wrk</code> to each of the paths on this controller:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb48-1" title="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb48-2" title="2"></a>
+<a class="sourceLine" id="cb48-3" title="3"><span class="va">CONNS=</span>500</a>
+<a class="sourceLine" id="cb48-4" title="4"><span class="va">THREADS=</span>500</a>
+<a class="sourceLine" id="cb48-5" title="5"><span class="va">DURATION=</span>60</a>
+<a class="sourceLine" id="cb48-6" title="6"></a>
+<a class="sourceLine" id="cb48-7" title="7"><span class="ex">wrk</span> -c<span class="va">${CONNS}</span> -t<span class="va">${THREADS}</span> -d<span class="va">${DURATION}</span>s -s ./multi-request-json.lua http://127.0.0.1:3000</a></code></pre></div>
+<p>Once our traffic generation script exits, we’ll interrupt <code>bpftrace</code> from earlier to signal it to print and summarize the data it collected:</p>
+<pre><code>
+@[all]:
+[100, 200)            18 |@@@@@@@@@@@@@@@@@                                   |
+[200, 300)            54 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[300, 400)             1 |                                                    |
+
+@[welcome]:
+[0, 100)              73 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+
+@[random]:
+[0, 100)               4 |@@@@@@@@@@@@@@@@                                    |
+[100, 200)            11 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@        |
+[200, 300)            10 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@            |
+[300, 400)             5 |@@@@@@@@@@@@@@@@@@@@                                |
+[400, 500)             8 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                    |
+[500, 600)             9 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                |
+[600, 700)             8 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                    |
+[700, 800)            13 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[800, 900)             5 |@@@@@@@@@@@@@@@@@@@@                                |
+[900, 1000)            1 |@@@@                                                |
+
+@[slow]:
+[500, 600)             8 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                  |
+[600, 700)            12 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@|
+[700, 800)             5 |@@@@@@@@@@@@@@@@@@@@@                               |
+[800, 900)             8 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                  |
+[900, 1000)           10 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@         |
+[1000, 1100)           7 |@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                      |
+[1100, 1200)           6 |@@@@@@@@@@@@@@@@@@@@@@@@@@                          |
+[1200, 1300)           6 |@@@@@@@@@@@@@@@@@@@@@@@@@@                          |
+[1300, 1400)           3 |@@@@@@@@@@@@@                                       |
+[1400, 1500)           6 |@@@@@@@@@@@@@@@@@@@@@@@@@@                          |
+[1500, 1600)           1 |@@@@                                                |
+[1600, 1700)           2 |@@@@@@@@                                            |</code></pre>
+<p>We can see the latency distribution, and the count of each request that fell into each bucket in the histogram.</p>
+<p>This results line up with what <code>wrk</code> reports in its summary, and the request data that is logged by the rails console.</p>
+<h1 id="usdt-examples-in-other-dynamic-languages">USDT examples in other dynamic languages</h1>
+<p>To demonstrate the portability of these same concepts, language-specific examples are provided here.</p>
+<p>We will implement the same <code>hello-word</code> style of probe of each of them, and explain the differences and implementation of each language.</p>
+<h2 id="ruby-wrapper-featured-elsewhere">Ruby wrapper (featured elsewhere)</h2>
+<p>Above <code>ruby-static-tracing</code><span class="citation" data-cites="ruby-static-tracing">[<a href="#ref-ruby-static-tracing" role="doc-biblioref">2</a>]</span> is featured more and examined heavily featured than other language runtimes, to illustrate the approach of adding <code>libstapsdt</code> to a dynamic runtime. Most of these same concepts apply to other languages.</p>
+<p>For example, the Rails usage concept of tracers may be portable to Django. In the same way that <code>ruby-static-tracing</code> offers an abstraction above tracepoints, other runtimes could take similar approaches.</p>
+<p>Ruby won’t be repeated here, and it is the author’s <span class="citation" data-cites="dalehamel">[<a href="#ref-dalehamel" role="doc-biblioref">17</a>]</span> bias and ignorance that Ruby is featured more heavily throughout the rest of the report.</p>
+<p>If you have examples of more detailed uses of each of USDT tracepoints in any other languages missing here, please submit a pull request.</p>
+<h2 id="python-wrapper">Python wrapper</h2>
+<p>To illustrate the point, we’ll how we’re able to add static tracepoints to python, which is similar to what we’ll be doing here with ruby.</p>
+<p>Examining the <a href="https://github.com/sthima/python-stapsdt">python wrapper</a> <span class="citation" data-cites="mmarchini">[<a href="#ref-mmarchini" role="doc-biblioref">9</a>]</span>, we can see a sample probe program:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb50-1" title="1"><span class="im">from</span> time <span class="im">import</span> sleep</a>
+<a class="sourceLine" id="cb50-2" title="2"></a>
+<a class="sourceLine" id="cb50-3" title="3"><span class="im">import</span> stapsdt</a>
+<a class="sourceLine" id="cb50-4" title="4"></a>
+<a class="sourceLine" id="cb50-5" title="5">provider <span class="op">=</span> stapsdt.Provider(<span class="st">&quot;pythonapp&quot;</span>)</a>
+<a class="sourceLine" id="cb50-6" title="6">probe <span class="op">=</span> provider.add_probe(</a>
+<a class="sourceLine" id="cb50-7" title="7">    <span class="st">&quot;firstProbe&quot;</span>, stapsdt.ArgTypes.uint64, stapsdt.ArgTypes.int32)</a>
+<a class="sourceLine" id="cb50-8" title="8">provider.load()</a>
+<a class="sourceLine" id="cb50-9" title="9"></a>
+<a class="sourceLine" id="cb50-10" title="10"></a>
+<a class="sourceLine" id="cb50-11" title="11"><span class="cf">while</span> <span class="va">True</span>:</a>
+<a class="sourceLine" id="cb50-12" title="12">    <span class="bu">print</span>(<span class="st">&quot;Firing probe...&quot;</span>)</a>
+<a class="sourceLine" id="cb50-13" title="13">    <span class="cf">if</span> probe.fire(<span class="st">&quot;My little probe&quot;</span>, <span class="dv">42</span>):</a>
+<a class="sourceLine" id="cb50-14" title="14">        <span class="bu">print</span>(<span class="st">&quot;Probe fired!&quot;</span>)</a>
+<a class="sourceLine" id="cb50-15" title="15">    sleep(<span class="dv">1</span>)</a></code></pre></div>
+<p><a href="https://pypi.org/project/stapsdt/">see pypi to install</a></p>
+<h2 id="nodejs-wrapper">NodeJS wrapper</h2>
+<p>A similar example, in <a href="https://github.com/sthima/node-usdt.git">nodejs</a> <span class="citation" data-cites="mmarchini">[<a href="#ref-mmarchini" role="doc-biblioref">9</a>]</span>, a similar sample probe:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">const</span> USDT <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;usdt&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-2" title="2"></a>
+<a class="sourceLine" id="cb51-3" title="3"><span class="kw">const</span> provider <span class="op">=</span> <span class="kw">new</span> <span class="va">USDT</span>.<span class="at">USDTProvider</span>(<span class="st">&quot;nodeProvider&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-4" title="4"><span class="kw">const</span> probe1 <span class="op">=</span> <span class="va">provider</span>.<span class="at">addProbe</span>(<span class="st">&quot;firstProbe&quot;</span><span class="op">,</span> <span class="st">&quot;int&quot;</span><span class="op">,</span> <span class="st">&quot;char *&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-5" title="5"><span class="va">provider</span>.<span class="at">enable</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-6" title="6"><span class="kw">let</span> countdown <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb51-7" title="7"></a>
+<a class="sourceLine" id="cb51-8" title="8"><span class="kw">function</span> <span class="at">waiter</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb51-9" title="9">  <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Firing probe...&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-10" title="10">  <span class="cf">if</span>(countdown <span class="op">&lt;=</span> <span class="dv">0</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb51-11" title="11">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Disable provider&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-12" title="12">    <span class="va">provider</span>.<span class="at">disable</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-13" title="13">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb51-14" title="14">  <span class="va">probe1</span>.<span class="at">fire</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb51-15" title="15">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Probe fired!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-16" title="16">    countdown <span class="op">=</span> countdown <span class="op">-</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb51-17" title="17">    <span class="cf">return</span> [countdown<span class="op">,</span> <span class="st">&quot;My little string&quot;</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-18" title="18">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb51-19" title="19"><span class="op">}</span></a>
+<a class="sourceLine" id="cb51-20" title="20"></a>
+<a class="sourceLine" id="cb51-21" title="21"><span class="at">setInterval</span>(waiter<span class="op">,</span> <span class="dv">750</span>)<span class="op">;</span></a></code></pre></div>
+<p><a href="https://www.npmjs.com/package/usdt">see npm to install</a></p>
+<h2 id="golang-wrapper">golang wrapper</h2>
+<p>For golang, our example comes from <a href="https://github.com/mmcshane/salp">salp</a> <span class="citation" data-cites="mmcshane">[<a href="#ref-mmcshane" role="doc-biblioref">18</a>]</span>:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode go"><code class="sourceCode go"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">var</span> (</a>
+<a class="sourceLine" id="cb52-2" title="2">	probes = salp.NewProvider(<span class="st">&quot;salp-demo&quot;</span>)</a>
+<a class="sourceLine" id="cb52-3" title="3"></a>
+<a class="sourceLine" id="cb52-4" title="4">	p1 = salp.MustAddProbe(probes, <span class="st">&quot;p1&quot;</span>, salp.Int32, salp.Error, salp.String)</a>
+<a class="sourceLine" id="cb52-5" title="5">	p2 = salp.MustAddProbe(probes, <span class="st">&quot;p2&quot;</span>, salp.Uint8, salp.Bool)</a>
+<a class="sourceLine" id="cb52-6" title="6">)</a></code></pre></div>
+<h1 id="libusdt">libusdt</h1>
+<p><code>ruby-static-tracing</code> <span class="citation" data-cites="ruby-static-tracing">[<a href="#ref-ruby-static-tracing" role="doc-biblioref">2</a>]</span> also wraps <code>libusdt</code> for Darwin / OSX support.</p>
+<p>libusdt is the provider used for dtrace probes and many of the examples powering the libraries on <span class="citation" data-cites="awesome-dtrace">[<a href="#ref-awesome-dtrace" role="doc-biblioref">19</a>]</span></p>
+<p>// FIXME do an analysis of the similarities of libusdt and libstapsdt, DOF vs ELF approach</p>
+<p>// Explain how libusdt is wrapped on Darwin</p>
+<h1 id="kubectl-trace">kubectl-trace</h1>
+<p>// FIXME add citation for kubectl-trace crew</p>
+<p>For production applications, <code>kubectl-trace</code> offers a convenient way to tap into our USDT tracepoints in production.</p>
+<p><code>kubectl-trace</code> will create a new kubernetes job, with a pod that runs bpftrace with the arguments provided by the user.</p>
+<p>We can use <code>kubectl-trace</code> to apply a local bpftrace script or expression to bpftrace instance running alongside our application. This allows for very easy, targetted tracing in production.</p>
+<p>// FIXME have an example of tracing a web app</p>
+<h1 id="use-in-local-development-environments">Use in Local Development Environments</h1>
+<h2 id="using-virtualization">Using virtualization</h2>
+<p>If your development environment already runs on top of a hypervisor, such as <code>Docker for Mac</code> or <code>Docker for Windows</code>. However, at present these do not currently work with bpftrace, as the kernel is too old and doesn’t support the necessary features. You can (and I have) built an updated kernel using linuxkit <span class="citation" data-cites="linuxkit">[<a href="#ref-linuxkit" role="doc-biblioref">20</a>]</span>, but while this does work it breaks the filesharing protocols used for bind-mounting with at least <code>Docker for Mac</code>.</p>
+<p>If <code>WSL</code> comes with a new enough kernel or can load custom kernels, it may be able to play a similar role to <code>xhyve</code> <span class="citation" data-cites="xhyve">[<a href="#ref-xhyve" role="doc-biblioref">21</a>]</span> or hyperkit <span class="citation" data-cites="hyperkit">[<a href="#ref-hyperkit" role="doc-biblioref">22</a>]</span>, but I have not tested against a Windows development environment or <code>WSL</code>.</p>
+<p>Vagrant is another option, and a Vagrantfile is included as a reference implementation for how to bootstrap a minimal-enough VM to get the included Dockerfile to run.</p>
+<p>The long and short of this approach is that it is good for if you are running your development application or dependencies inside of a linux VM, they can be traced with bpftrace provided that the kernel is new enough.</p>
+<h2 id="dtrace">dtrace</h2>
+<p>Some environments may use a Linux VM, such as Docker for Mac, Docker For Windows, or Railgun <span class="citation" data-cites="railgun-overview">[<a href="#ref-railgun-overview" role="doc-biblioref">23</a>]</span>, but run the actual application on the host OS, to provide a more native development experience.</p>
+<p>In these cases, since the application isn’t running inside of Linux, they cannot be probed with <code>bpftrace</code>. Luckily, OS X and Darwin include <code>dtrace</code>, and it can be used out-of-the-box, for all of the functionality outlined here. For the discussion here, the focus will be mostly on <code>dtrace</code> on OS X.</p>
+<p>When you run dtrace, it will complain about system integrity protection (SIP), which is an important security feature of OS X. Luckily, it doesn’t get in the way of how we implement probes here so the warning can be ignored.</p>
+<p>You do, still, need to run dtrace as root, so have your <code>sudo</code> password ready or <code>setuid</code> the <code>dtrace</code> binary, as we do for our integration tests with a copy of the system dtrace binary.</p>
+<p>dtrace can run commands specified by a string with the <code>-n</code> flag, or run script files (conventionally ending in <code>.dt</code>), with the <code>-s</code> flag.</p>
+<p><span class="citation" data-cites="dtrace-osx-manpage">[<a href="#ref-dtrace-osx-manpage" role="doc-biblioref">24</a>]</span></p>
+<p>Many simple dtrace scripts can be easily converted to bpftrace scripts see this cheatsheet <span class="citation" data-cites="bgregg-dtrace-for-linux">[<a href="#ref-bgregg-dtrace-for-linux" role="doc-biblioref">25</a>]</span>, and vice-versa.</p>
+<h2 id="listing-tracepoints-1">Listing tracepoints</h2>
+<p>To list tracepoints that you can trace:</p>
+<p>On Darwin/OSX:</p>
+<pre><code>dtrace -l -P &quot;${PROVIDER}${PID}&quot;</code></pre>
+<h2 id="simple-hello-world-1">Simple hello world</h2>
+<p>Recall from earlier, when we run <code>helloworld.rb</code>, it will loop and print:</p>
+<pre><code>Not enabled
+Not enabled
+Not enabled</code></pre>
+<p>One line about every second. Not very interesting, right?</p>
+<p>With dtrace:</p>
+<pre><code>dtrace -q -n &#39;global*:::hello_nsec
+             { printf(&quot;%lld %s\n&quot;, arg0, copyinstr(arg1)) }&#39;</code></pre>
+<p>Or, with dtrace and a script:</p>
+<pre><code>dtrace -q -s helloworld.dt</code></pre>
+<p><code>helloworld.dt</code>:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode awk"><code class="sourceCode awk"><a class="sourceLine" id="cb57-1" title="1">global<span class="op">*:::</span>hello_nsec</a>
+<a class="sourceLine" id="cb57-2" title="2">{</a>
+<a class="sourceLine" id="cb57-3" title="3">  <span class="kw">printf</span>(<span class="st">&quot;%lld %s</span><span class="sc">\n</span><span class="st">&quot;</span>, arg0, copyinstr(arg1))</a>
+<a class="sourceLine" id="cb57-4" title="4">}</a></code></pre></div>
+<h2 id="aggregation-functions-1">Aggregation functions</h2>
+<p>dtrace has equivalent support to bpftrace for generating both linear and log2 histograms.</p>
+<p>Recall from the example using <code>randist.rb</code> above:</p>
+<p>The example should fire out random integers between 0 and 100. We’ll see how random it actually is with a linear histogram, bucketing the results into steps of 10:</p>
+<pre><code>dtrace -q -n &#39;global*:::randist { @ = lquantize(arg0, 0, 100, 10) }&#39;</code></pre>
+<pre><code> value  ------------- Distribution ------------- count    
+   &lt; 0 |                                         0        
+     0 |@@@@                                     145456   
+    10 |@@@@                                     145094   
+    20 |@@@@                                     145901   
+    30 |@@@@                                     145617   
+    40 |@@@@                                     145792   
+    50 |@@@@                                     145086   
+    60 |@@@@                                     146287   
+    70 |@@@@                                     146041   
+    80 |@@@@                                     145331   
+    90 |@@@@                                     145217   
+&gt;= 100 |                                         0        
+</code></pre>
+<p>There are other aggregation functions <span class="citation" data-cites="dtrace-guide-aggregations">[<a href="#ref-dtrace-guide-aggregations" role="doc-biblioref">26</a>]</span>, similar to those offered by <code>bpftrace</code>.</p>
+<h2 id="latency-distributions-1">Latency distributions</h2>
+<p>Recall the <code>nsec</code> example from earlier with <code>bpftrace</code>.</p>
+<p>// FIXME add dtrace output for this example</p>
+<h1 id="use-in-ci-environments">Use in CI environments</h1>
+<p>// FIXME fill this out more</p>
+<p>To use <code>bpftrace</code> and USDT in a linux CI environment, it will need to run as a Privileged container, or a container with near-root privileges.</p>
+<p>This can be managed more safely if the <code>bpftrace</code> container is scoped back as much as possible.</p>
+<p>One possible implementation would be to set up a bpftrace hook-points into the CI script, where bpftrace would be called to check output of a particular probe.</p>
+<p>This would allow for sanity checking without the need for prints littered about.</p>
+<h2 id="call-stenography">Call stenography</h2>
+<p>Tools such as rotoscope <span class="citation" data-cites="rotoscope-github">[<a href="#ref-rotoscope-github" role="doc-biblioref">27</a>]</span> exist to trace method invocations in CI environments.</p>
+<p>The built-in Ruby <code>USDT</code> probes can do this already, allowing for tracing of methods to be done outside of the ruby VM flow altogether.</p>
+<p>A trivial <code>bpftrace</code> script can be written to log all method invocations in CI, and be used to help find dead code in CI.</p>
+<h2 id="memory-testing-analysis">Memory testing / analysis</h2>
+<p>Probes that use <code>ObjectSpace</code> can test for memory leaks by ensuring that unused objects are cleaned up when GC is called, and to try and catch objects that may never be released.</p>
+<h2 id="integration-testing">Integration testing</h2>
+<p>Integration tests can use <code>bpftrace</code> to verify that logic is executed, check expected parameters,</p>
+<h2 id="performance-testing">Performance testing</h2>
+<p>profile against a synthetic workloads test to prevent against AppDex <span class="citation" data-cites="appdex">[<a href="#ref-appdex" role="doc-biblioref">6</a>]</span> regressions, in CI or Production</p>
+<h1 id="self-analysis">Self-analysis</h1>
+<p>Using bpftrace, we can approximate the overhead of getting the current monotonic time. By examining the C code in ruby, we can see that <code>Process.clock_gettime(Process::CLOCK_MONOTONIC)</code> is merely a <a href="https://github.com/ruby/ruby/blob/trunk/process.c#L7882-L7892">wrapper around the libc function clock_gettime</a>.</p>
+<p>Attaching to a Pry process and calling this function, we can get the nanosecond latency of obtaining this timing value from libc:</p>
+<pre><code>bpftrace -e &#39;uprobe:/lib64/libc.so.6:clock_gettime /pid == 16138/
+             { @start[tid] = nsecs }
+             uretprobe:/lib64/libc.so.6:clock_gettime /@start [tid]
+             {
+               $latns = (nsecs - @start[tid]);
+               printf(&quot;%d\n&quot;, $latns);
+               delete(@start[tid]);
+             }&#39;
+Attaching 2 probes...
+11853
+5381
+5440
+4624
+3263</code></pre>
+<p>These are nanosecond values, which correspond to values between 0.005381 and 0.011853 ms. So, getting the before and after time adds on the order of about one hundredth of a millisecond of time spend in the thread.</p>
+<p>This means that it would take about one hundred probed methods to add one millisecond to a service an application request. If requests are close to 100ms to begin with, this should make the overhead of tracing nearly negligible.</p>
+<p>we must also measure the speed of checking if a probe is enabled to get the full picture, as well as any other in-line logic that is performed.</p>
+<h1 id="future-work">Future Work</h1>
+<h2 id="more-tracers-for-ruby-static-tracing">More tracers for ruby-static-tracing</h2>
+<p>We’d like to see more tracers in <code>ruby-static-tracing</code>, and hopefully user-contributed ones as well.</p>
+<p>There is potential for exploration of other aspects of ruby internals through USDT probes as well, such as <code>ObjectSpace</code> insights.</p>
+<p>Through parsing headers, you may be able to use <code>ruby-static-tracing</code> to augment distributed traces, if you can hook up to the right span.</p>
+<h2 id="kernel-vs-userspace-buffering">Kernel vs userspace buffering</h2>
+<p>It may not end up being an issue, but if probes are enabled (and fired!) persistently and frequently, the cost of the <code>int3</code> trap overhead may become significant.</p>
+<p>uprobes allow for buffering trace event data in kernel space, but lttng-ust provides a means to buffer data in userspace <span class="citation" data-cites="lttng-ust-ebpf">[<a href="#ref-lttng-ust-ebpf" role="doc-biblioref">28</a>]</span>. This eliminates the necessity of the <code>int3</code> trap, and allows for buffering trace data in the userspace application rather than the kernel. This approach could be used to aggregate events and perform fewer trap interrupts, draining the userland buffers during each eBPF read-routine.</p>
+<p>While <code>lttng-ust</code> does support userspace tracing of C programs already <span class="citation" data-cites="lttng-ust-manpage">[<a href="#ref-lttng-ust-manpage" role="doc-biblioref">29</a>]</span>, in a way analogously to <code>sys/sdt.h</code>, there is no solution for a dynamic version an <code>lttng-ust</code> binary. Like <code>DTRACE</code> macros, the <code>lttng-ust</code> macros are used to build the handlers, and they are linked-in as a shared object. In the same way that libstapsdt builds elf notes, it’s possible that a generator for the shared library stub produced by <code>lttng-ust</code> could be built. A minimum proof of concept would be a JIT compiler that compiles a generated header into an elf binary that can be <code>dlopen</code>’d to map it into the tracee’s address space.</p>
+<p>Analyzing the binary of a lttng-ust probe may give some clues as to how to build a minimal stub dynamically, as <code>libstapsdt</code> has done for <code>systemtap</code>’s <code>dtrace</code> macro implementation.</p>
+<p>Implementing userspace support in libraries like <code>ruby-static-tracing</code> <span class="citation" data-cites="ruby-static-tracing">[<a href="#ref-ruby-static-tracing" role="doc-biblioref">2</a>]</span> by wrapping <code>lttng-ust</code> could also offer a means of using userspace tracepoints for kernels not supporting eBPF, and an interesting benchmark comparison of user vs kernel space tracing, perhaps offering complementary approaches <span class="citation" data-cites="lttng-ust-ebpf">[<a href="#ref-lttng-ust-ebpf" role="doc-biblioref">28</a>]</span>.</p>
+<h2 id="ustack-helpers-in-bpftrace">ustack helpers in bpftrace</h2>
+<p>To have parity in debugging capabilities offered by dtrace, bpftrace needs to support the concept of a <code>ustack helper</code>.</p>
+<p>As languages like <code>nodejs</code> have done, bpftrace and bcc should offer a means of reading annotations for JIT language instructions, mapping them back to the source code that generated the JIT instruction. Examining the approach that <code>Nodejs</code> and <code>Python</code> have taken to add support for ustack helpers, we should be able to generalize a means for <code>bpftrace</code> programs to interpret annotations for JIT instructions. <span class="citation" data-cites="dtrace-ustack-helpers">[<a href="#ref-dtrace-ustack-helpers" role="doc-biblioref">30</a>]</span></p>
+<h2 id="ruby-jit-notes">Ruby JIT notes</h2>
+<p>Although ruby has a JIT under development <span class="citation" data-cites="ruby-jit">[<a href="#ref-ruby-jit" role="doc-biblioref">31</a>]</span>, it would be ideal to have the code to annotate instructions for a ustack helper could be added now.</p>
+<p>If ruby’s JIT simply wrote out notes in a way that would be easily loaded into a BPF map to notes by instruction, the eBPF probe can just check against this map for notes, and then the <code>ustack</code> helper in bpftrace would simply need a means of specifying how this map should be read when it is displayed.</p>
+<p>This would allow for stacktraces that span ruby space (via the annotated JIT instructions), C methods (via normal ELF parsing), and the kernel itself. Hopefully offering similar functionality to what has been provided to nodejs <span class="citation" data-cites="nodejs-david-pacheco">[<a href="#ref-nodejs-david-pacheco" role="doc-biblioref">32</a>]</span>.</p>
+<p>While not actually related to directly USDT, ustack helpers in bpftrace and support for a ruby ustack helper would be tremendously impactful at understanding the full execution profile of ruby programs.</p>
+<p>Ruby JIT is experimental and possibly to enable with <code>--jit</code> flag in 2.6 and higher. Perhaps adding JIT notes in a conforming way early could help to increase visibility into JIT’d code? ## BTF support</p>
+<p>For introspecting userspace applications, BTF <span class="citation" data-cites="facebook-btf">[<a href="#ref-facebook-btf" role="doc-biblioref">33</a>]</span> looks like it will be useful for deeper analysis of a variety of typed-objects.</p>
+<p>This may also free bpftrace and bcc from the need fork kernel headers, if the kernel type information can be read directly from BPF maps. For userspace programs, they may need to be compiled with BTF type information available, or have this information generated and loaded elsewhere somehow. This would be useful for analyzing the C components of language runtimes, such tracing the internals of the ruby C runtime, or analyzing C/C++ based application servers or databases.</p>
+<p>BTF support requires a kernel v4.18 or newer, and the raw BTF documentation is available in the kernel sources <span class="citation" data-cites="kernel-btf">[<a href="#ref-kernel-btf" role="doc-biblioref">34</a>]</span>. Few userspace tools exist for BTF yet, but once it is added into tools like <code>libbcc</code> and <code>bpftrace</code>, a whole new realm of possibilities for debugging and tracing applications is possible.</p>
+<h1 id="usdt-tracing-alternatives">USDT tracing alternatives</h1>
+<p>What distinguishes USDT tracepoints from a variety of other profiling and debugging tools is that other tools are generally either:</p>
+<ul>
+<li>Sampling profilers</li>
+<li>Trace every method invocation</li>
+<li>Require interrupting / stopping the program</li>
+</ul>
+<p>This approach to tracing uses the x86 breakpoint instruction (<code>INT3 0xCC</code>) to trigger a kernel trap handler that will hand off execution to an eBPF probe. This use of breakpoints - injected by the kernel into the application via the kernel <code>uprobe</code> API, gives us the ability to perform targeted debugging on production systems.</p>
+<p>Rather than printing to a character device (such as a log), or emitting a UDP or TCP based metric, USDT probes fire a kernel trap-handler. This allows for the kernel to do the work of collecting the local state, and summarizing it in eBPF maps.</p>
+<p>breakpoints are only executed when there is an eBPF program installed and registered to handle the breakpoint. If there is nothing registered to the breakpoint, it is not executed. The overhead of this is nanoseconds.</p>
+<p>For this reason, USDT tracepoints should be safe for use in production. The surgical precision that they offer in targeting memory addresses within the ruby execution context, and low overhead, make them a powerful tool.</p>
+<p>It is less for generating flamegraphs of an application as a whole, and more for drilling in deep on a particular area of code</p>
+<h2 id="ptrace-api">ptrace API</h2>
+<h3 id="gdb">gdb</h3>
+<p>gdb can be used to debug applications, but generally requires a lot of overhead</p>
+<h3 id="strace">strace</h3>
+<h2 id="process_vm_readv">process_vm_readv</h2>
+<p><code>rbspy</code> https://rbspy.github.io/using-rbspy/</p>
+<ul>
+<li>rbspy <span class="citation" data-cites="rbspy-github-io">[<a href="#ref-rbspy-github-io" role="doc-biblioref">35</a>]</span></li>
+<li>rbspy vs stackprof <span class="citation" data-cites="rbspy-vs-stackprof">[<a href="#ref-rbspy-vs-stackprof" role="doc-biblioref">36</a>]</span></li>
+</ul>
+<h2 id="signaling">signaling</h2>
+<p><code>rbtrace</code> https://github.com/tmm1/rbtrace/blob/master/ext/rbtrace.c * stackprof github <span class="citation" data-cites="stackprof-github">[<a href="#ref-stackprof-github" role="doc-biblioref">37</a>]</span> * rbtrace github <span class="citation" data-cites="rbtrace-github">[<a href="#ref-rbtrace-github" role="doc-biblioref">38</a>]</span></p>
+<h2 id="ruby">Ruby</h2>
+<h3 id="tracing-api">Tracing api</h3>
+<p>Most standard debuggers for ruby use ruby’s built-in tracing API. Ruby in fact already has <code>DTRACE</code> probes. What distinguishes <code>ruby-static-tracing</code> from these other approaches is that USDT tracepoints are compiled-in to the application. Ruby’s tracing API is an “all or nothing” approach, affecting the execution of every single method. With USDT tracing, trace data is collected at execution time when a tracing breakpoint instruction is executed.</p>
+<ul>
+<li>rotoscope <span class="citation" data-cites="rotoscope-github">[<a href="#ref-rotoscope-github" role="doc-biblioref">27</a>]</span></li>
+</ul>
+<p>Update: As of Ruby 2.6, it is now possible to do this thanks to <span class="citation" data-cites="ruby-tracing-feature-15289">[<a href="#ref-ruby-tracing-feature-15289" role="doc-biblioref">39</a>]</span>! You can see the official docs <span class="citation" data-cites="ruby-2-6-tracing-docs">[<a href="#ref-ruby-2-6-tracing-docs" role="doc-biblioref">40</a>]</span> for more details, but it’s currently a bit light as it’s a pretty new API.</p>
+<h1 id="acknowledgments">Acknowledgments</h1>
+<p>This is a report is meant to summarize my own research and experiments in this area, but the experience and research that went into making it all possible bears mentioning.</p>
+<ul>
+<li>Brendan Gregg <span class="citation" data-cites="brendangregg">[<a href="#ref-brendangregg" role="doc-biblioref">41</a>]</span> for his contributions to improving the accessibility of tracing tools throughout the industry</li>
+<li>Alastair Robertson <span class="citation" data-cites="ajor">[<a href="#ref-ajor" role="doc-biblioref">42</a>]</span> for creating bpftrace, and personally for reviewing the PRs I’ve submitted and offering insightful feedback</li>
+<li>Matheus Marchini <span class="citation" data-cites="mmarchini">[<a href="#ref-mmarchini" role="doc-biblioref">9</a>]</span> for his contributions to USDT tracing and feedback in reviews</li>
+<li>Willian Gaspar <span class="citation" data-cites="williangaspar">[<a href="#ref-williangaspar" role="doc-biblioref">10</a>]</span> for his contributions to iovisor and works featured here</li>
+<li>Jon Haslam <span class="citation" data-cites="tyroguru">[<a href="#ref-tyroguru" role="doc-biblioref">43</a>]</span> for his assistance and feedback on pull requests for USDT functionality in bpftrace</li>
+<li>Teng Qin <span class="citation" data-cites="palmtenor">[<a href="#ref-palmtenor" role="doc-biblioref">44</a>]</span> for reviewing my BCC patches with laser eyes</li>
+<li>Yonghong Song <span class="citation" data-cites="yonghong-song">[<a href="#ref-yonghong-song" role="doc-biblioref">45</a>]</span> for reviewing my BCC patches with laser eyes</li>
+<li>Julia Evans <span class="citation" data-cites="jvns">[<a href="#ref-jvns" role="doc-biblioref">46</a>]</span> for her amazing zines on tracing, rendering advanced concepts in accessible and creative formats, and her technical contributions to the tracing community and rbspy</li>
+<li>Lorenzo Fontana <span class="citation" data-cites="fntlnz">[<a href="#ref-fntlnz" role="doc-biblioref">47</a>]</span> for his work on creating and promoting kubetl-trace</li>
+<li>Leo Di Donato <span class="citation" data-cites="leodido">[<a href="#ref-leodido" role="doc-biblioref">48</a>]</span> for his work feedback and and insights on pull requests</li>
+</ul>
+<p>I’d also like to specifically extend appreciation to Facebook and Netflix’s Engineering staff working on tracing and kernel development, for their continued contributions and leadership in the field of Linux tracing and contributions to eBPF, as well as the entire iovisor group.</p>
+<h2 id="works-researched">Works Researched</h2>
+<p>Some of these may have been cited or sourced indirectly, or were helpful in my own research and understanding whether I explicitly cited them or not.</p>
+<p>If you’d like to learn more, check out these other resources:</p>
+<ul>
+<li>Hacking Linux USDT with ftrace <span class="citation" data-cites="bgregg-usdt-ftrace">[<a href="#ref-bgregg-usdt-ftrace" role="doc-biblioref">49</a>]</span></li>
+<li>USDT for reliable Userspace event tracing <span class="citation" data-cites="joel-fernandes-usdt-notes">[<a href="#ref-joel-fernandes-usdt-notes" role="doc-biblioref">50</a>]</span></li>
+<li>We just got a new super-power! Runtime USDT comes to Linux <span class="citation" data-cites="usdt-superpower">[<a href="#ref-usdt-superpower" role="doc-biblioref">51</a>]</span></li>
+<li>Seeing is Believing: uprobes and int3 Instruction <span class="citation" data-cites="uprobes-int3-insn">[<a href="#ref-uprobes-int3-insn" role="doc-biblioref">11</a>]</span></li>
+<li>Systemtap UST wiki <span class="citation" data-cites="stap-wiki-ust">[<a href="#ref-stap-wiki-ust" role="doc-biblioref">52</a>]</span></li>
+<li>Systemtap uprobe documentation <span class="citation" data-cites="stap-uprobe-documentation">[<a href="#ref-stap-uprobe-documentation" role="doc-biblioref">53</a>]</span></li>
+<li>Linux tracing systems &amp; how they fit together <span class="citation" data-cites="jvns-tracing-systems">[<a href="#ref-jvns-tracing-systems" role="doc-biblioref">54</a>]</span></li>
+<li>Full-system dynamic tracing on Linux using eBPF and bpftrace <span class="citation" data-cites="joyful-bikeshedding-bpftrace">[<a href="#ref-joyful-bikeshedding-bpftrace" role="doc-biblioref">5</a>]</span></li>
+<li>Awesome Dtrace - A curated list of awesome DTrace books, articles, videos, tools and resources <span class="citation" data-cites="awesome-dtrace">[<a href="#ref-awesome-dtrace" role="doc-biblioref">19</a>]</span></li>
+</ul>
+<div id="refs" class="references" role="doc-bibliography">
+<div id="ref-libstapsdt">
+<p>[1] M. Marchini and W. Gaspar, “libstapsdt repository.” [Online]. Available: <a href="https://github.com/sthima/libstapsdt">https://github.com/sthima/libstapsdt</a></p>
+</div>
+<div id="ref-ruby-static-tracing">
+<p>[2] D. Hamel, “ruby-static-tracing gem.” [Online]. Available: <a href="https://github.com/dalehamel/ruby-static-tracing">https://github.com/dalehamel/ruby-static-tracing</a></p>
+</div>
+<div id="ref-bpftrace">
+<p>[3] “bpftrace github repository.” [Online]. Available: <a href="https://github.com/iovisor/bpftrace">https://github.com/iovisor/bpftrace</a></p>
+</div>
+<div id="ref-bpftrace-reference-guide">
+<p>[4] “bpftrace reference guide.” [Online]. Available: <a href="https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md">https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md</a></p>
+</div>
+<div id="ref-joyful-bikeshedding-bpftrace">
+<p>[5] H. Lai, “Full-system dynamic tracing on Linux using eBPF and bpftrace.” [Online]. Available: <a href="https://www.joyfulbikeshedding.com/blog/2019-01-31-full-system-dynamic-tracing-on-linux-using-ebpf-and-bpftrace.html">https://www.joyfulbikeshedding.com/blog/2019-01-31-full-system-dynamic-tracing-on-linux-using-ebpf-and-bpftrace.html</a></p>
+</div>
+<div id="ref-appdex">
+<p>[6] “AppDex Wikipedia entry.”. </p>
+</div>
+<div id="ref-csfrancis">
+<p>[7] S. Francis, “Scott Francis Github.”. </p>
+</div>
+<div id="ref-sirupsen">
+<p>[8] S. Eskildsen, “Simon Hørup Eskildsen.”. </p>
+</div>
+<div id="ref-mmarchini">
+<p>[9] M. Marchini, “Matheus Marchini’s homepage.” [Online]. Available: <a href="https://mmarchini.me/">https://mmarchini.me/</a></p>
+</div>
+<div id="ref-williangaspar">
+<p>[10] W. Gaspar, “Willian Gaspar’s Github.” [Online]. Available: <a href="https://github.com/williangaspar">https://github.com/williangaspar</a></p>
+</div>
+<div id="ref-uprobes-int3-insn">
+<p>[11] A. Kolganov, “Seeing is Believing - uprobes and int3 Instruction.” [Online]. Available: <a href="https://dev.framing.life/tracing/uprobes-and-int3-insn/">https://dev.framing.life/tracing/uprobes-and-int3-insn/</a></p>
+</div>
+<div id="ref-usdt-rails-sample">
+<p>[12] D. Hamel, “Rails App with USDT tracing sample.” [Online]. Available: <a href="https://github.com/dalehamel/usdt-rails-sample">https://github.com/dalehamel/usdt-rails-sample</a></p>
+</div>
+<div id="ref-derekstride">
+<p>[13] D. Stride, “Derek Stride’s Github.”. </p>
+</div>
+<div id="ref-eightbitraptor">
+<p>[14] M. Valentine-House, “Matt Valentine-House’s Homepage.”. </p>
+</div>
+<div id="ref-gustavocaso">
+<p>[15] gustavo caso, “gustavo caso’s homepage.”. </p>
+</div>
+<div id="ref-wrk-http-benchmark">
+<p>[16] M. Czeraszkiewicz, “WRK the HTTP benchmarking tool - Advanced Example.” [Online]. Available: <a href="http://czerasz.com/2015/07/19/wrk-http-benchmarking-tool-example/">http://czerasz.com/2015/07/19/wrk-http-benchmarking-tool-example/</a></p>
+</div>
+<div id="ref-dalehamel">
+<p>[17] D. Hamel, “Dale Hamel’s Homepage.” [Online]. Available: <a href="https://blog.srvthe.net">https://blog.srvthe.net</a></p>
+</div>
+<div id="ref-mmcshane">
+<p>[18] M. McShane, “Matt McShane’s Homepage.” [Online]. Available: <a href="https://mattmcshane.com/">https://mattmcshane.com/</a></p>
+</div>
+<div id="ref-awesome-dtrace">
+<p>[19] A. Števko, “Awesome Dtrace - A curated list of awesome DTrace books, articles, videos, tools and resources.” [Online]. Available: <a href="https://awesome-dtrace.com/">https://awesome-dtrace.com/</a></p>
+</div>
+<div id="ref-linuxkit">
+<p>[20] “Linuxkit github repository.” [Online]. Available: <a href="https://github.com/linuxkit/linuxkit">https://github.com/linuxkit/linuxkit</a></p>
+</div>
+<div id="ref-xhyve">
+<p>[21] “Xhyve github repository.” [Online]. Available: <a href="https://github.com/machyve/xhyve/blob/master/README.md">https://github.com/machyve/xhyve/blob/master/README.md</a></p>
+</div>
+<div id="ref-hyperkit">
+<p>[22] “Hyperkit github repository.” [Online]. Available: <a href="https://github.com/moby/hyperkit">https://github.com/moby/hyperkit</a></p>
+</div>
+<div id="ref-railgun-overview">
+<p>[23] J. Nadeau, “Current Developer Environments at Shopify.” [Online]. Available: <a href="https://devproductivity.io/shopify-developer-environments-p2/index.html">https://devproductivity.io/shopify-developer-environments-p2/index.html</a></p>
+</div>
+<div id="ref-dtrace-osx-manpage">
+<p>[24] “Dtrace OS X manpage.” [Online]. Available: <a href="http://www.manpagez.com/man/1/dtrace/osx-10.12.6.php">http://www.manpagez.com/man/1/dtrace/osx-10.12.6.php</a></p>
+</div>
+<div id="ref-bgregg-dtrace-for-linux">
+<p>[25] B. Gregg, “bpftrace (DTrace 2.0) for Linux 2018.” [Online]. Available: <a href="http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html">http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html</a></p>
+</div>
+<div id="ref-dtrace-guide-aggregations">
+<p>[26] “dtrace guide on aggregation functions.” [Online]. Available: <a href="http://dtrace.org/guide/chp-aggs.html">http://dtrace.org/guide/chp-aggs.html</a></p>
+</div>
+<div id="ref-rotoscope-github">
+<p>[27] J. Husain and D. Dylan Thacker-Smith, “rotoscope github repo.” [Online]. Available: <a href="https://github.com/Shopify/rotoscope">https://github.com/Shopify/rotoscope</a></p>
+</div>
+<div id="ref-lttng-ust-ebpf">
+<p>[28] M. Desnoyers, “Using user-space tracepoints with BPF.” [Online]. Available: <a href="https://lwn.net/Articles/754868/">https://lwn.net/Articles/754868/</a></p>
+</div>
+<div id="ref-lttng-ust-manpage">
+<p>[29] M. Desnoyers, “lttng-ust manpage.” [Online]. Available: <a href="https://lttng.org/man/3/lttng-ust/v2.10/">https://lttng.org/man/3/lttng-ust/v2.10/</a></p>
+</div>
+<div id="ref-dtrace-ustack-helpers">
+<p>[30] D. Pacheco, “Understanding DTrace ustack helpers.” [Online]. Available: <a href="https://www.joyent.com/blog/understanding-dtrace-ustack-helpers">https://www.joyent.com/blog/understanding-dtrace-ustack-helpers</a></p>
+</div>
+<div id="ref-ruby-jit">
+<p>[31] S. Skipper, “Ruby’s New JIT.” [Online]. Available: <a href="https://medium.com/square-corner-blog/rubys-new-jit-91a5c864dd10">https://medium.com/square-corner-blog/rubys-new-jit-91a5c864dd10</a></p>
+</div>
+<div id="ref-nodejs-david-pacheco">
+<p>[32] D. Pacheco, “Where does your Node program spend its time?” [Online]. Available: <a href="http://dtrace.org/blogs/dap/2012/01/05/where-does-your-node-program-spend-its-time/">http://dtrace.org/blogs/dap/2012/01/05/where-does-your-node-program-spend-its-time/</a></p>
+</div>
+<div id="ref-facebook-btf">
+<p>[33] A. Nakryiko, “Enhancing the Linux kernel with BTF type information.” [Online]. Available: <a href="https://facebookmicrosites.github.io/bpf/blog/2018/11/14/btf-enhancement.html">https://facebookmicrosites.github.io/bpf/blog/2018/11/14/btf-enhancement.html</a></p>
+</div>
+<div id="ref-kernel-btf">
+<p>[34] “Kernel BTF documentation.” [Online]. Available: <a href="https://www.kernel.org/doc/html/latest/bpf/index.html#bpf-type-format-btf">https://www.kernel.org/doc/html/latest/bpf/index.html#bpf-type-format-btf</a></p>
+</div>
+<div id="ref-rbspy-github-io">
+<p>[35] J. Evans, J. Evans, K. Marhubi, and J. Johnson, “rbspy github pages.” [Online]. Available: <a href="https://rbspy.github.io/">https://rbspy.github.io/</a></p>
+</div>
+<div id="ref-rbspy-vs-stackprof">
+<p>[36] J. Evans, J. Evans, K. Marhubi, and J. Johnson, “rbspy vs stackprof.” [Online]. Available: <a href="https://rbspy.github.io/rbspy-vs-stackprof/">https://rbspy.github.io/rbspy-vs-stackprof/</a></p>
+</div>
+<div id="ref-stackprof-github">
+<p>[37] A. Gupta, “stackprof github repo.” [Online]. Available: <a href="https://github.com/tmm1/stackprof">https://github.com/tmm1/stackprof</a></p>
+</div>
+<div id="ref-rbtrace-github">
+<p>[38] A. Gupta, “rbtrace github repo.” [Online]. Available: <a href="https://github.com/tmm1/rbtrace">https://github.com/tmm1/rbtrace</a></p>
+</div>
+<div id="ref-ruby-tracing-feature-15289">
+<p>[39] “Ruby 2.6 adds method tracing.” [Online]. Available: <a href="https://bugs.ruby-lang.org/issues/15289">https://bugs.ruby-lang.org/issues/15289</a></p>
+</div>
+<div id="ref-ruby-2-6-tracing-docs">
+<p>[40] “Ruby 2.6 Method Tracing Docs.” [Online]. Available: <a href="https://ruby-doc.org/core-2.6/TracePoint.html#method-i-enable">https://ruby-doc.org/core-2.6/TracePoint.html#method-i-enable</a></p>
+</div>
+<div id="ref-brendangregg">
+<p>[41] B. Gregg, “Brendan Gregg’s homepage.” [Online]. Available: <a href="https://brendangregg.com">https://brendangregg.com</a></p>
+</div>
+<div id="ref-ajor">
+<p>[42] A. Robertson, “Alastair Robertson’s Homepage.” [Online]. Available: <a href="https://ajor.co.uk/projects/">https://ajor.co.uk/projects/</a></p>
+</div>
+<div id="ref-tyroguru">
+<p>[43] J. Haslam, “Jon Haslam’s Github.” [Online]. Available: <a href="https://github.com/tyroguru">https://github.com/tyroguru</a></p>
+</div>
+<div id="ref-palmtenor">
+<p>[44] T. Qin, “Teng Qin’s Github.” [Online]. Available: <a href="https://github.com/palmtenor">https://github.com/palmtenor</a></p>
+</div>
+<div id="ref-yonghong-song">
+<p>[45] Y. Song, “Yonghong Song’s Github.” [Online]. Available: <a href="https://github.com/yonghong-song">https://github.com/yonghong-song</a></p>
+</div>
+<div id="ref-jvns">
+<p>[46] J. Evans, “Julia Evans’s homepage.” [Online]. Available: <a href="https://jvns.ca/">https://jvns.ca/</a></p>
+</div>
+<div id="ref-fntlnz">
+<p>[47] L. Fontana, “Lorenzo Fontana’s Homepage.” [Online]. Available: <a href="https://fntlnz.wtf/">https://fntlnz.wtf/</a></p>
+</div>
+<div id="ref-leodido">
+<p>[48] L. Di Donato, “Leo Di Donato’s Github.” [Online]. Available: <a href="https://github.com/leodido">https://github.com/leodido</a></p>
+</div>
+<div id="ref-bgregg-usdt-ftrace">
+<p>[49] B. Gregg, “Hacking Linux USDT with ftrace.” [Online]. Available: <a href="https://www.brendangregg.com/blog/2015-07-03/hacking-linux-usdt-ftrace.html">https://www.brendangregg.com/blog/2015-07-03/hacking-linux-usdt-ftrace.html</a></p>
+</div>
+<div id="ref-joel-fernandes-usdt-notes">
+<p>[50] J. Fernandes, “USDT for reliable Userspace event tracing.” [Online]. Available: <a href="https://www.joelfernandes.org/linuxinternals/2018/02/10/usdt-notes.html">https://www.joelfernandes.org/linuxinternals/2018/02/10/usdt-notes.html</a></p>
+</div>
+<div id="ref-usdt-superpower">
+<p>[51] M. Marchini, “We just got a new super-power! Runtime USDT comes to Linux.” [Online]. Available: <a href="https://medium.com/sthima-insights/we-just-got-a-new-super-power-runtime-usdt-comes-to-linux-814dc47e909f">https://medium.com/sthima-insights/we-just-got-a-new-super-power-runtime-usdt-comes-to-linux-814dc47e909f</a></p>
+</div>
+<div id="ref-stap-wiki-ust">
+<p>[52] M. Mark Wielaard and F. Eigler, “UserSpaceProbeImplementation - Systemtap Wiki.” [Online]. Available: <a href="https://sourceware.org/systemtap/wiki/UserSpaceProbeImplementation">https://sourceware.org/systemtap/wiki/UserSpaceProbeImplementation</a></p>
+</div>
+<div id="ref-stap-uprobe-documentation">
+<p>[53] J. Keniston, “User-Space Probes (Uprobes).” [Online]. Available: <a href="https://sourceware.org/git/gitweb.cgi?p=systemtap.git;a=blob;f=runtime/uprobes/uprobes.txt;h=edd524be022691498c7f38133b0e32192dcbb35f;hb=a2b182f549cf64427a474803f3c02286b8c1b5e1">https://sourceware.org/git/gitweb.cgi?p=systemtap.git;a=blob;f=runtime/uprobes/uprobes.txt;h=edd524be022691498c7f38133b0e32192dcbb35f;hb=a2b182f549cf64427a474803f3c02286b8c1b5e1</a></p>
+</div>
+<div id="ref-jvns-tracing-systems">
+<p>[54] J. Evans, “Linux tracing systems &amp; how they fit together.” [Online]. Available: <a href="https://jvns.ca/blog/2017/07/05/linux-tracing-systems/">https://jvns.ca/blog/2017/07/05/linux-tracing-systems/</a></p>
+</div>
+</div>
+</article>
+</body>
+</html>

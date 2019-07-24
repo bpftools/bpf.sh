@@ -1,0 +1,316 @@
+references:
+- id: ajor
+  title: Alastair Robertson's Homepage
+  author:
+  - given: Alastair
+    family: Robertson
+  URL: https://ajor.co.uk/projects/
+- id: brendangregg
+  title: Brendan Gregg's homepage
+  author:
+  - given: Brendan
+    family: Gregg
+  URL: https://brendangregg.com
+- id: tyroguru
+  title: Jon Haslam's Github
+  author:
+  - given: Jon
+    family: Haslam
+  URL: https://github.com/tyroguru
+- id: jvns
+  title: Julia Evans's homepage
+  author:
+  - given: Julia
+    family: Evans
+  URL: https://jvns.ca/
+- id: jvns-tracing-systems
+  title: Linux tracing systems & how they fit together
+  author:
+  - given: Julia
+    family: Evans
+  URL: https://jvns.ca/blog/2017/07/05/linux-tracing-systems/
+- id: mmarchini
+  title: Matheus Marchini's homepage
+  author:
+  - given: Matheus
+    family: Marchini
+  URL: https://mmarchini.me/
+- id: palmtenor
+  title: Teng Qin's Github
+  author:
+  - given: Teng
+    family: Qin
+  URL: https://github.com/palmtenor
+- id: fntlnz
+  title: Lorenzo Fontana's Homepage
+  author:
+  - given: Lorenzo
+    family: Fontana
+  URL: https://fntlnz.wtf/
+- id: leodido
+  title: Leo Di Donato's Github
+  author:
+  - given: Leo
+    family: Di Donato
+  URL: https://github.com/leodido
+- id: yonghong-song
+  title: Yonghong Song's Github
+  author:
+  - given: Yonghong
+    family: Song
+  URL: https://github.com/yonghong-song
+- id: bgregg-usdt-ftrace
+  title: Hacking Linux USDT with ftrace
+  author:
+  - given: Brendan
+    family: Gregg
+  URL: https://www.brendangregg.com/blog/2015-07-03/hacking-linux-usdt-ftrace.html
+- id: joel-fernandes-usdt-notes
+  title: USDT for reliable Userspace event tracing
+  author:
+  - given: Joel
+    family: Fernandes
+  URL: https://www.joelfernandes.org/linuxinternals/2018/02/10/usdt-notes.html
+- id: usdt-superpower
+  title: We just got a new super-power! Runtime USDT comes to Linux
+  author:
+  - given: Matheus
+    family: Marchini
+  URL: https://medium.com/sthima-insights/we-just-got-a-new-super-power-runtime-usdt-comes-to-linux-814dc47e909f
+- id: williangaspar
+  title: Willian Gaspar's Github
+  author:
+  - given: Willian
+    family: Gaspar
+  URL: https://github.com/williangaspar
+- id: uprobes-int3-insn
+  title: Seeing is Believing - uprobes and int3 Instruction
+  author:
+  - given: Alexey
+    family: Kolganov
+  URL: https://dev.framing.life/tracing/uprobes-and-int3-insn/
+- id: stap-wiki-ust
+  title: UserSpaceProbeImplementation - Systemtap Wiki
+  author:
+  - given: Mark
+    family: Mark Wielaard
+  - given: Frank
+    family: Eigler
+  URL: https://sourceware.org/systemtap/wiki/UserSpaceProbeImplementation
+- id: stap-uprobe-documentation
+  title: User-Space Probes (Uprobes)
+  author:
+  - given: Jim
+    family: Keniston
+  URL: https://sourceware.org/git/gitweb.cgi?p=systemtap.git;a=blob;f=runtime/uprobes/uprobes.txt;h=edd524be022691498c7f38133b0e32192dcbb35f;hb=a2b182f549cf64427a474803f3c02286b8c1b5e1
+- id: dtrace-ustack-helpers
+  title: Understanding DTrace ustack helpers
+  author:
+  - given: David
+    family: Pacheco
+  URL: https://www.joyent.com/blog/understanding-dtrace-ustack-helpers
+- id: lttng-ust-ebpf
+  title: Using user-space tracepoints with BPF
+  author:
+  - given: Mathieu
+    family: Desnoyers
+  URL: https://lwn.net/Articles/754868/
+- id: lttng-ust-manpage
+  title: lttng-ust manpage
+  author:
+  - given: Mathieu
+    family: Desnoyers
+  URL: https://lttng.org/man/3/lttng-ust/v2.10/
+- id: rbspy-github-io
+  title: rbspy github pages
+  author:
+  - given: Julia
+    family: Evans
+  - given: Julia
+    family: Evans
+  - given: Kamal
+    family: Marhubi
+  - given: Joel
+    family: Johnson
+  URL: https://rbspy.github.io/
+- id: rbspy-vs-stackprof
+  title: rbspy vs stackprof
+  author:
+  - given: Julia
+    family: Evans
+  - given: Julia
+    family: Evans
+  - given: Kamal
+    family: Marhubi
+  - given: Joel
+    family: Johnson
+  URL: https://rbspy.github.io/rbspy-vs-stackprof/
+- id: stackprof-github
+  title: stackprof github repo
+  author:
+  - given: Aman
+    family: Gupta
+  URL: https://github.com/tmm1/stackprof
+- id: rbtrace-github
+  title: rbtrace github repo
+  author:
+  - given: Aman
+    family: Gupta
+  URL: https://github.com/tmm1/rbtrace
+- id: rotoscope-github
+  title: rotoscope github repo
+  author:
+  - given: Jahfer
+    family: Husain
+  - given: Dylan
+    family: Dylan Thacker-Smith
+  URL: https://github.com/Shopify/rotoscope
+- id: wrk-http-benchmark
+  title: WRK the HTTP benchmarking tool - Advanced Example
+  author:
+  - given: Michał
+    family: Czeraszkiewicz
+  URL: http://czerasz.com/2015/07/19/wrk-http-benchmarking-tool-example/
+- id: joyful-bikeshedding-bpftrace
+  title: Full-system dynamic tracing on Linux using eBPF and bpftrace
+  author:
+  - given: Hongli
+    family: Lai
+  URL: https://www.joyfulbikeshedding.com/blog/2019-01-31-full-system-dynamic-tracing-on-linux-using-ebpf-and-bpftrace.html
+- id: dtrace-guide-aggregations
+  title: dtrace guide on aggregation functions
+  URL: http://dtrace.org/guide/chp-aggs.html
+- id: bpftrace-reference-guide
+  title: bpftrace reference guide
+  URL: https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md
+- id: dalehamel
+  title: Dale Hamel's Homepage
+  author:
+  - given: Dale
+    family: Hamel
+  URL: https://blog.srvthe.net
+- id: ruby-static-tracing
+  title: ruby-static-tracing gem
+  author:
+  - given: Dale
+    family: Hamel
+  URL: https://github.com/dalehamel/ruby-static-tracing
+- id: usdt-rails-sample
+  title: Rails App with USDT tracing sample
+  author:
+  - given: Dale
+    family: Hamel
+  URL: https://github.com/dalehamel/usdt-rails-sample
+- id: ruby-static-tracing
+  title: ruby-static-tracing gem
+  author:
+  - given: Dale
+    family: Hamel
+  URL: https://github.com/dalehamel/ruby-static-tracing
+- id: libstapsdt
+  title: libstapsdt repository
+  author:
+  - given: Matheus
+    family: Marchini
+  - given: Willian
+    family: Gaspar
+  URL: https://github.com/sthima/libstapsdt
+- id: mmcshane
+  title: Matt McShane's Homepage
+  author:
+  - given: Matt
+    family: McShane
+  URL: https://mattmcshane.com/
+- id: ruby-jit
+  title: Ruby’s New JIT
+  author:
+  - given: Shannon
+    family: Skipper
+  URL: https://medium.com/square-corner-blog/rubys-new-jit-91a5c864dd10
+- id: nodejs-david-pacheco
+  title: Where does your Node program spend its time?
+  author:
+  - given: David
+    family: Pacheco
+  URL: http://dtrace.org/blogs/dap/2012/01/05/where-does-your-node-program-spend-its-time/
+- id: facebook-btf
+  title: Enhancing the Linux kernel with BTF type information
+  author:
+  - given: Andrii
+    family: Nakryiko
+  URL: https://facebookmicrosites.github.io/bpf/blog/2018/11/14/btf-enhancement.html
+- id: kernel-btf
+  title: Kernel BTF documentation
+  URL: https://www.kernel.org/doc/html/latest/bpf/index.html#bpf-type-format-btf
+- id: awesome-dtrace
+  title: Awesome Dtrace - A curated list of awesome DTrace books, articles, videos, tools and resources
+  author:
+  - given: Adam
+    family: Števko
+  URL: https://awesome-dtrace.com/
+- id: gustavocaso
+  title: gustavo caso's homepage
+  author:
+  - given: gustavo
+    family: caso
+  url: http://gustavocaso.github.io/
+- id: eightbitraptor
+  title: Matt Valentine-House's Homepage
+  author:
+  - given: Matt
+    family: Valentine-House
+  url: https://www.eightbitraptor.com/
+- id: derekstride
+  title: Derek Stride's Github
+  author:
+  - given: Derek
+    family: Stride
+  url: https://github.com/DerekStride
+- id: sirupsen
+  title: Simon Hørup Eskildsen
+  author:
+  - given: Simon
+    family: Eskildsen
+  url: https://sirupsen.com/
+- id: csfrancis
+  title: Scott Francis Github
+  author:
+  - given: Scott
+    family: Francis
+  url: https://github.com/csfrancis
+- id: appdex
+  title: AppDex Wikipedia entry
+  url: https://en.wikipedia.org/wiki/Apdex
+- id: dtrace-osx-manpage
+  title: Dtrace OS X manpage
+  URL: http://www.manpagez.com/man/1/dtrace/osx-10.12.6.php
+- id: bpftrace
+  title: bpftrace github repository
+  URL: https://github.com/iovisor/bpftrace
+- id: bgregg-dtrace-for-linux
+  title: bpftrace (DTrace 2.0) for Linux 2018
+  author:
+  - given: Brendan
+    family: Gregg
+  URL: http://www.brendangregg.com/blog/2018-10-08/dtrace-for-linux-2018.html
+- id: railgun-overview
+  title: Current Developer Environments at Shopify
+  author:
+  - given: Julian
+    family: Nadeau
+  URL: https://devproductivity.io/shopify-developer-environments-p2/index.html
+- id: xhyve
+  title: Xhyve github repository
+  URL: https://github.com/machyve/xhyve/blob/master/README.md
+- id: hyperkit
+  title: Hyperkit github repository
+  URL: https://github.com/moby/hyperkit
+- id: linuxkit
+  title: Linuxkit github repository
+  URL: https://github.com/linuxkit/linuxkit
+- id: ruby-tracing-feature-15289
+  title: Ruby 2.6 adds method tracing
+  URL: https://bugs.ruby-lang.org/issues/15289
+- id: ruby-2-6-tracing-docs
+  title: Ruby 2.6 Method Tracing Docs
+  URL: https://ruby-doc.org/core-2.6/TracePoint.html#method-i-enable

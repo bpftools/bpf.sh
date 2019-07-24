@@ -1,0 +1,5 @@
+usdt::global:hello_test
+{
+  printf("%s\n", str(arg0));
+  exit();
+}
