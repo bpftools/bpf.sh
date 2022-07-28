@@ -28,4 +28,4 @@ travis:
 index.html:
 	ln -sf index/index.html index.html
 
-all: docs/build index.html
+all: submodules docs/build index.html
