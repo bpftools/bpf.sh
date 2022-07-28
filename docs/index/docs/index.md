@@ -26,6 +26,7 @@ If you've been doing something cool with eBPF, please consider contributing your
 iproute2](https://medium.com/@fntlnz/load-xdp-programs-using-the-ip-iproute2-command-502043898263),
 a medium article from Lorenzo Fontana demonstrating a basic usage of XDP
 to load an eBPF program.
+* [xdp-tutorial](https://github.com/xdp-project/xdp-tutorial) contains a tutorial that aims to introduce you to the basic steps needed to effectively write programs for the eXpress Data Path (XDP) system in the Linux kernel, which offers high-performance programmable packet processing integrated with the kernel. By [XDP Project](https://github.com/xdp-project).
 
 ## Tracing and Performance Analysis
 
@@ -39,6 +40,20 @@ eBPF is a very new topic so there aren't a lot of books, but take a look at:
 * Upcoming [BPF Performance Tools](http://www.brendangregg.com/blog/2019-07-15/bpf-performance-tools-book.html) by Brendan Gregg, reviewers editors include Dale Hamel
 
 Both are or will be visible on Safari soon, so you can make an account with O'Reilly to read electronic editios of them before they are available in print.
+
+## eBPF Security
+
+Here are a number of eBPF security resources.
+
+#### Rootkits and Research
+
+* [Boopkit](https://github.com/kris-nova/boopkit) is an eBPF based rootkit for Linux kernels built to assist Ukraine after the Russian invasion by [Kris Nóva](https://github.com/kris-nova).
+* [Triple Cross](https://github.com/h3xduck/TripleCross) is an academic research project, with working code, on advanced rootkit command and control with eBPF. TripleCross is a Linux eBPF rootkit that demonstrates the offensive capabilities of the eBPF technology. By [Marcos Bajo](https://github.com/h3xduck).
+* [ebpfkit](https://github.com/Gui774ume/ebpfkit) is a rootkit that leverages multiple eBPF features to implement offensive security techniques. We implemented most of the features you would expect from a rootkit: obfuscation techniques, container breakouts, persistent access, command and control, pivoting, network scanning, Runtime Application Self-Protection (RASP) bypass, etc. By [Guillaume Fournier](https://github.com/Gui774ume).
+
+## Additional Resources
+
+* [awesome-ebpf](https://github.com/zoidbergwill/awesome-ebpf) is an alternative curated collection of eBPF resources.
 
 # Want to contribute?
 
